@@ -1,5 +1,4 @@
 import axios from 'axios';
-// import env from 'dotenv';
 
 export default {
   getSports: () => {
@@ -9,6 +8,6 @@ export default {
   },
 
   getLines: (sport) => {
-    return axios.get(`https://api.the-odds-api.com/v3/odds?sport=${ sport }&region=us&apiKey=`);
+    return axios.get(`https://api.the-odds-api.com/v3/odds?&apiKey=&sport=${ sport }&region=us&mkt=h2h&oddsFormat=american`);
   }
 };

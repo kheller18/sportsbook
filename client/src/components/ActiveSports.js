@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import API from '../utils/API';
-import ActiveLines from './ActiveLines';
+import ActiveGames from './ActiveGames';
 export const SportsContext = React.createContext();
 
 const SportsData = () => {
@@ -25,7 +25,7 @@ const SportsData = () => {
         ))}
       </ul> */}
       <SportsContext.Provider value={sports.map(sport => (sport.key))}>
-        <ActiveLines />
+        <ActiveGames />
       </SportsContext.Provider>
     </div>
   );
