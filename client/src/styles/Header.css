@@ -1,12 +1,14 @@
 .header {
   display: flex;
   flex-direction: row;
+  width: 100%;
+  background-color: darkblue;
 }
 
 .header-title {
   display: flex;
-  margin-left: 10px;
-  color: blue;
+  margin-left: 15px;
+  color: white;
 }
 
 .header-links {

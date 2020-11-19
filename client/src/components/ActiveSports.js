@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import API from '../utils/API';
 import ActiveGames from './ActiveGames';
-import Nav from './Nav';
+// import Nav from './Nav';
 export const SportsContext = React.createContext();
 
 const SportsData = () => {
