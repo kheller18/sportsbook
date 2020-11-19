@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import API from '../utils/API';
 import ActiveGames from './ActiveGames';
+import Nav from './Nav';
 export const SportsContext = React.createContext();
 
 const SportsData = () => {
@@ -19,13 +20,9 @@ const SportsData = () => {
 
   return (
     <div>
-      {/* <ul>
-        {sports.map(sport => (
-          <li key={sport.key}>{sport.key}</li>
-        ))}
-      </ul> */}
       <SportsContext.Provider value={sports.map(sport => (sport.key))}>
         <ActiveGames />
+        {/* <Nav /> */}
       </SportsContext.Provider>
     </div>
   );

@@ -1,0 +1,17 @@
+button:hover {
+  cursor: pointer;
+}
+
+.render-games {
+  margin: 30px;
+}
+
+.render-game {
+  display: flex;
+  flex-direction: row;
+  margin: 10px;
+}
+
+.render-team {
+  margin-right: 10px;
+}

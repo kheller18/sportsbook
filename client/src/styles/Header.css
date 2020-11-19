@@ -1,21 +1,21 @@
-.nav {
+.header {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 }
 
-.nav-header {
+.header-title {
   display: flex;
   margin-left: 10px;
   color: blue;
 }
 
-.nav-links {
+.header-links {
   display: flex;
   flex-direction: row;
   justify-content: right;
 }
 
-.nav-link {
+.header-link {
   display: flex;
   flex-direction: row;
   list-style-type: none;
