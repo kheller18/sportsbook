@@ -1,11 +1,12 @@
 import React from 'react';
 import './App.css';
 import ActiveSports from './components/ActiveSports';
+import Nav from './components/Nav';
 
 function App() {
   return (
     <div className="App">
-      <h1>HI</h1>
+      <Nav />      
       <ActiveSports />
     </div>
   );

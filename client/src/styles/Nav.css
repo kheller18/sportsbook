@@ -1,0 +1,23 @@
+.nav {
+  display: flex;
+  flex-direction: row;
+}
+
+.nav-header {
+  display: flex;
+  margin-left: 10px;
+  color: blue;
+}
+
+.nav-links {
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+}
+
+.nav-link {
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
+  color: green;
+}
