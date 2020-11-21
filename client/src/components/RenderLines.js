@@ -7,23 +7,27 @@ const RenderLines = () => {
   const sportsLines = useContext(ActiveLinesContext);
 
   useEffect(() => {
-    console.log(sportsLines);
+    // console.log(sportsLines);
   }, [sportsLines]);
-
-
 
   return (
   <div>
     <h2>NFL Lines</h2>
-    {sportsLines.map(line => 
-      <div className='render-games' key={line.key}>
+    {sportsLines.map(game => 
+      <div className='render-games' key={game.key}>
+        <div className='render-gamedate'>{game.gameDate}</div>
+        <div className='render-gametime'>{game.gameTimeEst}</div>
         <div className='render-game'>
-          <div className='render-team'>{line.awayTeam}</div>
-          <button className='render-moneyline'>{line.awayMoneyLine.toString().charAt(0)==='-' ? line.awayMoneyLine : `+${ line.awayMoneyLine }`}</button>
+          <div className='render-team'>{game.awayTeam}</div>
+          <button className='render-moneyline'>{game.awayMoneyLine.toString().charAt(0)==='-' ? game.awayMoneyLine : `+${ game.awayMoneyLine }`}</button>
+          <button className='render-spread'>{game.awaySpread.toString().charAt(0)==='-' ? game.awaySpread : `+${ game.awaySpread }`}</button>
+          <button className='render-over'>O/{game.overUnder}</button>
         </div>
         <div className='render-game'>
-          <div className='render-team'>{line.homeTeam}</div>
-          <button className='render-moneyline'>{line.homeMoneyLine.toString().charAt(0)==='-' ? line.homeMoneyLine : `+${ line.homeMoneyLine }`}</button>
+          <div className='render-team'>{game.homeTeam}</div>
+          <button className='render-moneyline'>{game.homeMoneyLine.toString().charAt(0)==='-' ? game.homeMoneyLine : `+${ game.homeMoneyLine }`}</button>
+          <button className='render-spread'>{game.homeSpread.toString().charAt(0)==='-' ? game.homeSpread : `+${ game.homeSpread }`}</button>
+          <button className='render-under'>U/{game.overUnder}</button>
         </div>
       </div>
     )}

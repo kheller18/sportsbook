@@ -4,28 +4,53 @@ import ActiveLines from './ActiveLines';
 import { SportsContext } from './ActiveSports';
 export const GamesContext = React.createContext();
 
-const ActiveGames = () => {
-  const [games, setGames] = useState([]);
+function ActiveGames() {
+  const [games, setGames] = useState({ moneyline: null, spread: null, total: null });
+  const [isLoading, setIsLoading] = useState(true);
   const sports = useContext(SportsContext);
 
   useEffect(() => {
-    API.getLines(sports[1])
-      .then(res => {
-        console.log(res.data.data)
-        // console.log(res.data.data[0].sites[6].odds.h2h[0]);
-        setGames(res.data.data);
+    const getMoneyLineData = async () => {
+      const response = await API.getLines(sports[1], 'moneyline');
+      console.log(response)
+      return response.data.data;
+    };
+
+    const getSpreadData = async () => {
+      const response = await API.getLines(sports[1], 'spread');
+      console.log(response)
+      return response.data.data;
+    };
+
+    const getTotalsData = async () => {
+      const response = await API.getLines(sports[1], 'totals');
+      console.log(response)
+      return response.data.data;
+    };
+
+    Promise.all([getMoneyLineData(), getSpreadData(), getTotalsData()])
+      .then(values => {
+        setGames({
+          ...games,
+          moneyline: values[0],
+          spread: values[1],
+          total: values[2],
+        })
+        setIsLoading(false)
       })
       .catch(err => {
-        console.log(err)
-      })
-  }, [sports]);
+        console.log(err);
+        setIsLoading(false)
+      });
+  }, []);
 
   return (
     <div>
-      {/* {games.map(game => <div key={game.home_team}>{game.teams[0]} vs. {game.teams[1]}</div>)} */}
-      <GamesContext.Provider value={games}>
-        <ActiveLines />
-      </GamesContext.Provider>
+      {isLoading ? '' :
+        <GamesContext.Provider value={games}>
+          <ActiveLines />
+        </GamesContext.Provider>
+      }
     </div>
   );
 };

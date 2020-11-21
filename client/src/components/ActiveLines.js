@@ -2,44 +2,70 @@ import React, { useEffect, useState, useContext } from 'react';
 import { GamesContext } from './ActiveGames';
 import RenderLines from './RenderLines';
 export const ActiveLinesContext = React.createContext();
+const moment = require('moment-timezone');
 
 const ActiveLines = () => {
   const [lines, setLines] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const games = useContext(GamesContext);
   
   useEffect(() => {
     setLines(gameInfo(games));
-    console.log(games);
-  }, [games]);
+    setIsLoading(false);
+    // console.log(games);
+  }, []);
+
+  const formatDate = (seconds) => {
+    const gmtDate = new Date(seconds * 1000);
+    const myTimeZone = 'America/Toronto';
+    const myDateTimeFormat = 'MMMM Do YYYY h:mm a z';
+    const formattedDateTime = moment(gmtDate).tz(myTimeZone).format(myDateTimeFormat).split('2020 ');
+    const formattedDate = formattedDateTime[0];
+    const formattedTime = formattedDateTime[1];
+    return [formattedDate, formattedTime];
+  };
 
   const gameInfo = (gameData) => {
     const gameInfoArray = [];
     let i;
     console.log(gameData);
-    for (i = 0; i < gameData.length; i++) {
+    // console.log(gameData.games.length)
+
+    for (i = 0; i < gameData.moneyline.length - 3; i++) {
+      const formattedDate = formatDate(gameData.moneyline[i].commence_time);
+      console.log(gameData.total[i].sites[0]);
       gameInfoArray.push({
-        key: `${ gameData[i].home_team }-${ gameData[i].commence_time }`,
-        league: gameData[i].sport_nice,
-        awayTeam: gameData[i].teams[0],
-        homeTeam: gameData[i].teams[1],
-        awayMoneyLine: gameData[i].sites[0].odds.h2h[0],
-        homeMoneyLine: gameData[i].sites[0].odds.h2h[1],
-        lastUpdated: gameData[i].sites[0].last_update,
-        siteRetrieved: gameData[i].sites[0].site_key,
-        gameTimeGmt: gameData[i].commence_time
+        key: `${ gameData.moneyline[i].home_team }-${ gameData.moneyline[i].commence_time }`,
+        league: gameData.moneyline[i].sport_nice,
+        awayTeam: gameData.moneyline[i].teams[0],
+        homeTeam: gameData.moneyline[i].teams[1],
+        awayMoneyLine: gameData.moneyline[i].sites[0].odds.h2h[0],
+        homeMoneyLine: gameData.moneyline[i].sites[0].odds.h2h[1],
+        awaySpread: gameData.spread[i].sites[0].odds.spreads.points[0],
+        homeSpread: gameData.spread[i].sites[0].odds.spreads.points[1],
+        awaySpreadOdds: gameData.spread[i].sites[0].odds.spreads.odds[0],
+        homeSpreadOdds: gameData.spread[i].sites[0].odds.spreads.odds[1],
+        overUnder: gameData.total[i].sites[0].odds.totals.points[0],
+        overOdds: gameData.total[i].sites[0].odds.totals.odds[0],
+        underOdds: gameData.total[i].sites[0].last_update,
+        lastUpdated: gameData.moneyline[i].sites[0].last_update,
+        siteRetrieved: gameData.moneyline[i].sites[0].site_key,
+        gameDate: formattedDate[0],
+        gameTimeEst: formattedDate[1]
       });
     };
+
+    console.log(gameInfoArray);
     return gameInfoArray;
   };
 
   return (
-    // <div>
-    //   {lines.map(line => <div key={line.key}>{line.awayTeam} ({line.awayMoneyLine.toString().charAt(0)==='-' ? line.awayMoneyLine : `+${ line.awayMoneyLine }`}) VS. {line.homeTeam} ({line.homeMoneyLine.toString().charAt(0)==='-' ? line.homeMoneyLine : `+${ line.homeMoneyLine }`})</div>)}
-    // </div>
     <div>
-      <ActiveLinesContext.Provider value={lines}>
-        <RenderLines />
-      </ActiveLinesContext.Provider>
+      {isLoading ? '' : 
+        <ActiveLinesContext.Provider value={lines}>
+          <RenderLines />
+        </ActiveLinesContext.Provider>
+      }
     </div>
   );
 };
