@@ -12,7 +12,6 @@ const ActiveLines = () => {
   useEffect(() => {
     setLines(gameInfo(games));
     setIsLoading(false);
-    // console.log(games);
   }, []);
 
   const formatDate = (seconds) => {
@@ -28,34 +27,35 @@ const ActiveLines = () => {
   const gameInfo = (gameData) => {
     const gameInfoArray = [];
     let i;
-    console.log(gameData);
-    // console.log(gameData.games.length)
 
-    for (i = 0; i < gameData.moneyline.length - 3; i++) {
+    for (i = 0; i < gameData.moneyline.length; i++) {
       const formattedDate = formatDate(gameData.moneyline[i].commence_time);
-      console.log(gameData.total[i].sites[0]);
-      gameInfoArray.push({
-        key: `${ gameData.moneyline[i].home_team }-${ gameData.moneyline[i].commence_time }`,
-        league: gameData.moneyline[i].sport_nice,
-        awayTeam: gameData.moneyline[i].teams[0],
-        homeTeam: gameData.moneyline[i].teams[1],
-        awayMoneyLine: gameData.moneyline[i].sites[0].odds.h2h[0],
-        homeMoneyLine: gameData.moneyline[i].sites[0].odds.h2h[1],
-        awaySpread: gameData.spread[i].sites[0].odds.spreads.points[0],
-        homeSpread: gameData.spread[i].sites[0].odds.spreads.points[1],
-        awaySpreadOdds: gameData.spread[i].sites[0].odds.spreads.odds[0],
-        homeSpreadOdds: gameData.spread[i].sites[0].odds.spreads.odds[1],
-        overUnder: gameData.total[i].sites[0].odds.totals.points[0],
-        overOdds: gameData.total[i].sites[0].odds.totals.odds[0],
-        underOdds: gameData.total[i].sites[0].last_update,
-        lastUpdated: gameData.moneyline[i].sites[0].last_update,
-        siteRetrieved: gameData.moneyline[i].sites[0].site_key,
-        gameDate: formattedDate[0],
-        gameTimeEst: formattedDate[1]
-      });
+      const moneyLineData = gameData.moneyline[i];
+      const spreadData = gameData.spread[i];
+      const totalsData = gameData.total[i];
+      if (!moneyLineData.sites[0] || !spreadData.sites[0] || !totalsData.sites[0]) {
+      } else {
+        gameInfoArray.push({
+          key: `${ gameData.moneyline[i].home_team }-${ gameData.moneyline[i].commence_time }`,
+          league: gameData.moneyline[i].sport_nice,
+          awayTeam: gameData.moneyline[i].teams[0],
+          homeTeam: gameData.moneyline[i].teams[1],
+          awayMoneyLine: gameData.moneyline[i].sites[0].odds.h2h[0],
+          homeMoneyLine: gameData.moneyline[i].sites[0].odds.h2h[1],
+          awaySpread: gameData.spread[i].sites[0].odds.spreads.points[0],
+          homeSpread: gameData.spread[i].sites[0].odds.spreads.points[1],
+          awaySpreadOdds: gameData.spread[i].sites[0].odds.spreads.odds[0],
+          homeSpreadOdds: gameData.spread[i].sites[0].odds.spreads.odds[1],
+          overUnder: gameData.total[i].sites[0].odds.totals.points[0],
+          overOdds: gameData.total[i].sites[0].odds.totals.odds[0],
+          underOdds: gameData.total[i].sites[0].odds.totals.odds[1],
+          lastUpdated: gameData.moneyline[i].sites[0].last_update,
+          siteRetrieved: gameData.moneyline[i].sites[0].site_key,
+          gameDate: formattedDate[0],
+          gameTimeEst: formattedDate[1]
+        });  
+      }
     };
-
-    console.log(gameInfoArray);
     return gameInfoArray;
   };
 

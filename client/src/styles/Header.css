@@ -1,6 +1,7 @@
 .header {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   width: 100%;
   background-color: darkblue;
 }
@@ -9,17 +10,17 @@
   display: flex;
   margin-left: 15px;
   color: white;
+  font-weight: bold;
+  font-size: 32px;
+  height: 60px;
 }
 
 .header-links {
-  display: flex;
-  flex-direction: row;
-  justify-content: right;
+  margin-right: 15px;
 }
 
 .header-link {
-  display: flex;
-  flex-direction: row;
   list-style-type: none;
   color: green;
-}
+  font-weight: bold;
+} 

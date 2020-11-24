@@ -1,0 +1,68 @@
+.slip-title {
+  background-color: darkblue;
+  color: white;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.slip-body {
+  background-color: white;
+  padding: 10px;
+}
+
+.win-value {
+  color: green;
+}
+
+.lose-value {
+  color: red;
+}
+
+.slip-exit {
+  /* display: flex;
+  flex-direction: row; */
+  text-align: right;
+  /* justify-content: right; */
+}
+
+.slip-exit:hover {
+  cursor: pointer;
+}
+
+.slip-buttons {
+  margin: 10px;
+}
+
+.slip-button {
+  margin: 10px;
+  font-weight: bold;
+}
+
+#submit-slip {
+  background-color: green;
+  color: white;
+}
+
+.slip-to-lose {
+  height: 20px;
+  width: 50px;
+}
+
+.slip-away-team {
+  text-align: left;
+}
+
+.slip-home-team {
+  text-align: left;
+}
+
+.slip-money {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin: 20px;
+}
