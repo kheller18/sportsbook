@@ -30,6 +30,7 @@ function App() {
       <div className='App'>
         <Header />
         <Switch>
+          <Route path='/' exact component={Login} />
           <Route path='/login' exact component={Login} />
           <Route path='/signup' exact component={SignUp} /> 
           {/* <Route path='/members' exact component={ActiveSports} onEnter={requireAuth} /> */}
