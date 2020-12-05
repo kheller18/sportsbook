@@ -12,19 +12,16 @@ function ActiveGames() {
   useEffect(() => {
     const getMoneyLineData = async () => {
       const response = await API.getLines(sports[1], 'moneyline');
-      // console.log(response)
       return response.data.data;
     };
 
     const getSpreadData = async () => {
       const response = await API.getLines(sports[1], 'spread');
-      // console.log(response)
       return response.data.data;
     };
 
     const getTotalsData = async () => {
       const response = await API.getLines(sports[1], 'totals');
-      // console.log(response)
       return response.data.data;
     };
 

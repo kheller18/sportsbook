@@ -4,21 +4,10 @@ import '../styles/UserDashboard.css'
 
 function UserDashboard() {
   const [bets, setBets] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState('');
 
-  // function userChart() {
-
-  //   let lineChart = new Chart(line, {
-  //     type: line,
-  //     data: {
-  //       labels
-  //     }
-  //   })
-  // };
-
   useEffect(() => {
-    console.log('hey')
     const userData = async () => {
       const userData = JSON.parse(localStorage.getItem('user'));
       console.log(userData);
@@ -28,7 +17,7 @@ function UserDashboard() {
         .then(res => {
           console.log(res.data);
           setBets(res.data);
-          setIsLoading(false);
+          // setIsLoading(false);
         })
         .catch(err => {
           console.log(err);
@@ -43,14 +32,6 @@ function UserDashboard() {
     <div className='dashboard-container'>
       <div className='dashboard-body'>
         <div className='dashboard-title'>Welcome {user}!</div>
-        {/* {bets} */}
-        {/* {isLoading ? '' :
-          bets.map(bet => {
-            return (
-              <div key={bet._id} className='bet'>{bet.betInfo.team}</div>
-            );
-          })
-        } */}
       </div>
     </div>
   );

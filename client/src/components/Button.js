@@ -1,8 +1,6 @@
 import React from 'react';
 
 const Button = (props) => {
-  // console.log('rendering button ', {children})
-  // console.log(props);
   return (
     <button
       onClick={props.onClick}

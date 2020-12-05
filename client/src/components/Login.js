@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-// import { BrowserRouter as Router, Link, Redirect } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
 import API from '../utils/API';
 import '../styles/Login.css';
 
 const Login = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isError, setIsError] = useState(false);
+  // const [isError, setIsError] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -14,17 +13,15 @@ const Login = () => {
     event.preventDefault();
     API.login(email, password)
       .then((response) => {
-        console.log(response);
         if (response.data.success === true) {
           console.log('logged in loginjs')
           setIsLoggedIn(true);
-          // return <Redirect to='/members' />;
         } else {
-          setIsError(true);
+          // setIsError(true);
         };
       })
       .catch(() => {
-        setIsError(true);
+        // setIsError(true);
       });
   };
 
@@ -33,7 +30,6 @@ const Login = () => {
   }, []);
 
   if (isLoggedIn) {
-    console.log('redirect try')
     return <Redirect to='/members' />;
   }
 

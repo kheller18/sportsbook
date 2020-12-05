@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import API from '../utils/API';
 import ActiveGames from './ActiveGames';
-// import Nav from './Nav';
 export const SportsContext = React.createContext();
 
 function ActiveSports() {

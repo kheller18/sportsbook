@@ -3,26 +3,11 @@ import '../styles/BetSlip.css';
 import API from '../utils/API';
 
 const BetSlip = (e) => {
-  // const betInformation = useContext(RenderLinesContext);
-  // const inital = false;
-  
   const [toLose, setToLose] = useState(undefined);
   const [toWin, setToWin] = useState();
-  // const [slipData, setSlipData] = useState({data: {}})
-
-  // if (!e) {
-  //   const [toWin, setToWin] = useState('');
-  // } else {
-  //   const [toWin, setToWin] = useState(toLose * e.data.slipData.odds);
-  // }
-  // const [slip, setSlip] = useState({});
-  console.log(e);
+  
   useEffect(() => {
-    // if (initial) {
-    //   setToWin(toLose * e.data.slipData.odds)
-    //   inital = true;
-    // }
-    // dependency delted 'toLose'
+
   }, [e]);
 
   const handleChange = (e, data) => {
@@ -58,7 +43,6 @@ const BetSlip = (e) => {
     const payout = null;
     let line = null;
     const status = 'LIVE';
-    // setSlipData({data: {toLose: toLose, toWin: toWin}});
     console.log(e);
 
     const slipData = async () => {

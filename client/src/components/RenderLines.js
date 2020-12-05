@@ -6,13 +6,9 @@ import Button from './Button';
 export const RenderLinesContext = React.createContext();
 
 const RenderLines = () => {
-  // const [sportsLines, renderSportsLines] = useState
-  // const [click, setClick] = useState(false);
   const [clickData, setClickData] = useState({ data: null, slipData: null, isLoading: true })
   const sportsLines = useContext(ActiveLinesContext);
   const header = ['TIME', 'TEAM', 'MONEY', 'SPREAD', 'TOTAL'];
-  // console.log('hello');
-  // console.log(clickData);
   
   const handleClick = (e, game) => {
     e.preventDefault();
@@ -43,22 +39,10 @@ const RenderLines = () => {
       default:
         console.log('None selected.')
     };
-    // setClickData({ data: game,  isLoading: false });
-    // setClickData({ data: game, slipData: {team: game.awayTeam, odds: game.awayMoneyLine, type: 'moneyline'},  isLoading: false });
     console.log(clickData);
   };
 
   useEffect(() => {
-    // window.addEventListener("click", handleClick)
-    // if(clickData.isLoading) {
-
-    // } else {
-    //   console.log('hey')
-    // }
-    // console.log(sportsLines);
-  // }, [sportsLines]);
-    // console.log(clickData.isLoading)
-    // return () => window.removeEventListener("click", handleClick);
     console.log(clickData);
   }, [handleClick]);
 
@@ -68,7 +52,6 @@ const RenderLines = () => {
         <div className='render-sport-title'>NFL</div>
         <table className='table'>
           <thead>
-            {/* <tr>{header.map((h, i) => <th key={i}>{h}</th>)}</tr> */}
             <tr className='table-headers'>
               <th className='th' id='header-time'>{header[0]}</th>
               <th className='th' id='header-team'>{header[1]}</th>
@@ -93,12 +76,10 @@ const RenderLines = () => {
                                 <Button 
                                   onClick={(e) => handleClick(e, game)}
                                   value={{
-                                    
                                       slipInfo: {
                                         team: game.awayTeam,
                                         odds: game.awayMoneyLine
                                       } 
-                                    
                                   }}
                                   data={game}
                                   className='render-moneyline'
@@ -107,7 +88,6 @@ const RenderLines = () => {
                                   {game.awayMoneyLine.toString().charAt(0)==='-' ? game.awayMoneyLine : `+${ game.awayMoneyLine }`}
                                 </Button>
                               </td>
-
                               <td className='render-button'>
                                 <Button 
                                   onClick={(e) => handleClick(e, game)}
@@ -147,7 +127,6 @@ const RenderLines = () => {
                           <tbody>
                             <tr>
                               <td>{game.gameDate}<br />{game.gameTimeEst}</td>
-                              {/* <td>{game.gameTimeEst}</td> */}
                             </tr>
                           </tbody>
                         </table>
