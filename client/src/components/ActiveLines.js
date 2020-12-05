@@ -17,7 +17,7 @@ const ActiveLines = () => {
   const formatDate = (seconds) => {
     const gmtDate = new Date(seconds * 1000);
     const myTimeZone = 'America/Toronto';
-    const myDateTimeFormat = 'MMMM Do YYYY h:mm a z';
+    const myDateTimeFormat = 'MM/D YYYY h:mm a z';
     const formattedDateTime = moment(gmtDate).tz(myTimeZone).format(myDateTimeFormat).split('2020 ');
     const formattedDate = formattedDateTime[0];
     const formattedTime = formattedDateTime[1];
@@ -26,13 +26,13 @@ const ActiveLines = () => {
 
   const gameInfo = (gameData) => {
     const gameInfoArray = [];
-    let i;
 
-    for (i = 0; i < gameData.moneyline.length; i++) {
+    for (let i = 0; i < gameData.moneyline.length; i++) {
       const formattedDate = formatDate(gameData.moneyline[i].commence_time);
       const moneyLineData = gameData.moneyline[i];
       const spreadData = gameData.spread[i];
       const totalsData = gameData.total[i];
+      
       if (!moneyLineData.sites[0] || !spreadData.sites[0] || !totalsData.sites[0]) {
       } else {
         gameInfoArray.push({

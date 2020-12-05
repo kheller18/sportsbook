@@ -1,9 +1,57 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import API from '../utils/API';
+import '../styles/UserDashboard.css'
 
 function UserDashboard() {
+  const [bets, setBets] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useState('');
+
+  // function userChart() {
+
+  //   let lineChart = new Chart(line, {
+  //     type: line,
+  //     data: {
+  //       labels
+  //     }
+  //   })
+  // };
+
+  useEffect(() => {
+    console.log('hey')
+    const userData = async () => {
+      const userData = JSON.parse(localStorage.getItem('user'));
+      console.log(userData);
+      setUser(userData.firstName);
+      const userId = userData._id;
+      await API.getBets(userId)
+        .then(res => {
+          console.log(res.data);
+          setBets(res.data);
+          setIsLoading(false);
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    }
+
+    userData()
+    console.log(bets)
+  }, []);
+
   return (
-    <div>
-      <div className='dashboard-title'>Welcome User!</div>
+    <div className='dashboard-container'>
+      <div className='dashboard-body'>
+        <div className='dashboard-title'>Welcome {user}!</div>
+        {/* {bets} */}
+        {/* {isLoading ? '' :
+          bets.map(bet => {
+            return (
+              <div key={bet._id} className='bet'>{bet.betInfo.team}</div>
+            );
+          })
+        } */}
+      </div>
     </div>
   );
 };

@@ -7,6 +7,7 @@ const Button = (props) => {
     <button
       onClick={props.onClick}
       className={props['className']}
+      id={props['id']}
       value={props['value']}
       data = {props['data']}
     >

@@ -5,6 +5,9 @@
   margin-top: 20px;
   background-color: darkblue;
   width: 100%;
+  position: absolute;
+  bottom: 0;
+  
 }
 
 .footer-title {

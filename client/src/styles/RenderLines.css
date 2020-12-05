@@ -16,19 +16,19 @@ button:hover {
 }
 
 .game-container {
-  width: 50%;
+  width: 750px;
   margin-left: 30px;
 }
 
 .bet-slip {
-  width: 30%;
+  width: 345px;
   /* margin-top: 30px; */
   margin-left: 100px;
 }
 
 .table {
   border: none;
-  background-color: darkgray;
+  background-color: lightgray;
   /* padding: 5px; */
   width: 100%;
 }
@@ -47,10 +47,11 @@ button:hover {
 .render-main-body {
   background-color: white;
   margin-bottom: 10px;
-  width: 100%;
+  width: 750px;
   padding: 10px;
   height: 100px;
   border-radius: 5px;
+  font-size: 13px;
 }
 
 
@@ -83,6 +84,7 @@ button:hover {
   height: 50px;
   text-align: left;
   padding-left: 10px;
+  padding-top: 5px;
 }
 
 .render-gametime {
@@ -139,4 +141,16 @@ button:hover {
 
 .table-headers {
   padding: 20px;
+}
+
+.render-gametime-row {
+  padding: none;
+}
+
+.scroll-container {
+  /* padding-left: 10px;
+  padding-right: 10px; */
+  height: 375px;
+  overflow: scroll;
+  overflow-x: hidden;
 }

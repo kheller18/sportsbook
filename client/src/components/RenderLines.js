@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useCallback } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { ActiveLinesContext } from './ActiveLines';
 import '../styles/RenderLines.css'
 import BetSlip from './BetSlip';
@@ -7,19 +7,44 @@ export const RenderLinesContext = React.createContext();
 
 const RenderLines = () => {
   // const [sportsLines, renderSportsLines] = useState
-  const [click, setClick] = useState(false);
-  const [clickData, setClickData] = useState({ data: null, isLoading: true })
+  // const [click, setClick] = useState(false);
+  const [clickData, setClickData] = useState({ data: null, slipData: null, isLoading: true })
   const sportsLines = useContext(ActiveLinesContext);
   const header = ['TIME', 'TEAM', 'MONEY', 'SPREAD', 'TOTAL'];
-  console.log('hello');
-  console.log(clickData);
+  // console.log('hello');
+  // console.log(clickData);
   
   const handleClick = (e, game) => {
     e.preventDefault();
     e.persist();
     console.log(e);
-    console.log(e.target.value)
-    setClickData({ data: game,  isLoading: false })
+    console.log(e.target.id);
+    console.log(game);
+    switch (e.target.id) {
+      case 'away-moneyline':
+        setClickData({ data: game, slipData: {team: game.awayTeam, odds: game.awayMoneyLine, type: 'MONEYLINE'},  isLoading: false });
+        break;
+      case 'away-spread':
+        setClickData({ data: game, slipData: {team: game.awayTeam, line: game.awaySpread, odds: game.awaySpreadOdds, type: 'SPREAD'},  isLoading: false });
+        break;
+      case 'over':
+        setClickData({ data: game, slipData: {team: game.awayTeam, line: game.overUnder, odds: game.overOdds, type: 'TOTALS-OVER'},  isLoading: false });
+        break;
+      case 'home-moneyline':
+        setClickData({ data: game, slipData: {team: game.homeTeam, odds: game.homeMoneyLine, type: 'MONEYLINE'},  isLoading: false });
+        break;
+      case 'home-spread':
+        console.log('homespread');
+        setClickData({ data: game, slipData: {team: game.homeTeam, line: game.homeSpread, odds: game.homeSpreadOdds, type: 'SPREAD'},  isLoading: false });
+        break;
+      case 'under':
+        setClickData({ data: game, slipData: {team: game.homeTeam, line: game.overUnder, odds: game.underOdds, type: 'TOTALS-UNDER'},  isLoading: false });
+        break;
+      default:
+        console.log('None selected.')
+    };
+    // setClickData({ data: game,  isLoading: false });
+    // setClickData({ data: game, slipData: {team: game.awayTeam, odds: game.awayMoneyLine, type: 'moneyline'},  isLoading: false });
     console.log(clickData);
   };
 
@@ -34,7 +59,8 @@ const RenderLines = () => {
   // }, [sportsLines]);
     // console.log(clickData.isLoading)
     // return () => window.removeEventListener("click", handleClick);
-  }, [clickData]);
+    console.log(clickData);
+  }, [handleClick]);
 
   return (
     <div className='container'>
@@ -52,9 +78,10 @@ const RenderLines = () => {
             </tr>
           </thead>
         </table>
+          <div className='scroll-container'>
             {sportsLines.map(game => {
               return (
-                <table className='render-main-body'>
+                <table key={game.key} className='render-main-body'>
                   <tbody>
                     <tr key={game.key}>
                       <td className='render-away-row'>
@@ -65,12 +92,17 @@ const RenderLines = () => {
                               <td className='render-button'>
                                 <Button 
                                   onClick={(e) => handleClick(e, game)}
-                                  value={[{
-                                    away: game.awayTeam,
-                                    line: game.awayMoneyLine
-                                  }]}
+                                  value={{
+                                    
+                                      slipInfo: {
+                                        team: game.awayTeam,
+                                        odds: game.awayMoneyLine
+                                      } 
+                                    
+                                  }}
                                   data={game}
                                   className='render-moneyline'
+                                  id='away-moneyline'
                                 >
                                   {game.awayMoneyLine.toString().charAt(0)==='-' ? game.awayMoneyLine : `+${ game.awayMoneyLine }`}
                                 </Button>
@@ -85,8 +117,9 @@ const RenderLines = () => {
                                   ]}
                                   data={{data: game}}
                                   className='render-spread'
+                                  id='away-spread'
                                 >
-                                  {game.awaySpread.toString().charAt(0)==='-' ? game.awaySpread  : `+${ game.awaySpread } (${ game.awaySpreadOdds })`}
+                                  {game.awaySpread.toString().charAt(0)==='-' ? `${ game.awaySpread } (${ game.awaySpreadOdds })` : `+${ game.awaySpread } (${ game.awaySpreadOdds })`}
                                 </Button>
                               </td>
                               <td className='render-button'>
@@ -98,8 +131,9 @@ const RenderLines = () => {
                                   ]}
                                   data={game}
                                   className='render-over'
+                                  id='over'
                                 >
-                                  O/{game.overUnder}
+                                  O/{game.overUnder} ({game.overOdds})
                                 </Button>
                               </td>
                             </tr>
@@ -108,11 +142,12 @@ const RenderLines = () => {
                       </td>
                     </tr>
                     <tr>
-                      <td>
+                      <td className='render-gametime-row'>
                         <table className='render-gametime'>
                           <tbody>
                             <tr>
-                              <td>{game.gameTimeEst}</td>
+                              <td>{game.gameDate}<br />{game.gameTimeEst}</td>
+                              {/* <td>{game.gameTimeEst}</td> */}
                             </tr>
                           </tbody>
                         </table>
@@ -133,6 +168,7 @@ const RenderLines = () => {
                                   }]}
                                   data={game}
                                   className='render-moneyline'
+                                  id='home-moneyline'
                                 >
                                   {game.homeMoneyLine.toString().charAt(0)==='-' ? game.homeMoneyLine : `+${ game.homeMoneyLine }`}
                                 </Button>
@@ -146,8 +182,9 @@ const RenderLines = () => {
                                   ]}
                                   data={{data: game}}
                                   className='render-spread'
+                                  id='home-spread'
                                 >
-                                  {game.homeSpread.toString().charAt(0)==='-' ? game.homeSpread  : `+${ game.homeSpread } (${ game.homeSpreadOdds })`}
+                                  {game.homeSpread.toString().charAt(0)==='-' ? `${ game.homeSpread } (${ game.homeSpreadOdds })` : `+${ game.homeSpread } (${ game.homeSpreadOdds })`}
                                 </Button>
                               </td>
                               <td className='render-button'>
@@ -159,8 +196,9 @@ const RenderLines = () => {
                                   ]}
                                   data={game}
                                   className='render-over'
+                                  id='under'
                                 >
-                                  U/{game.overUnder}
+                                  U/{game.overUnder} ({game.underOdds})
                                 </Button>
                               </td>
                             </tr>
@@ -172,12 +210,11 @@ const RenderLines = () => {
                 </table>
               );
             })}
+          </div>
       </div>
       <div className='bet-slip'>
         <BetSlip data={clickData} />
-
       </div>
-
     </div>
   );
 };

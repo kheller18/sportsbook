@@ -1,9 +1,14 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const passportLocalMongoose = require('passport-local-mongoose');
 
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
+    username: {
+      type: String,
+      trim: true
+    },
     firstName: {
       type: String,
       trim: true,
@@ -17,42 +22,50 @@ const userSchema = new Schema({
     email: {
       type: String,
       unique: true,
+      trim: true,
       allowNull: false,
-      validate: {
-        isEmail: true
-      },
+      // validate: {
+      //   isEmail: true
+      // }
     },
-    password: {
+    address: {
       type: String,
+      trim: true,
       allowNull: false
     },
-    accessToken: {
+    city: {
       type: String,
+      trim: true,
       allowNull: false
     },
-    sessionSalt: {
+    state: {
       type: String,
+      trim: true,
       allowNull: false
+    },
+    zipcode: {
+      type: Number,
+      trim: true,
+      allowNull: false
+    },
+    bets: {
+      type: Array,
+    },
+    accountValue: {
+      type: Number,
+      default: 1000
     }
+    // accessToken: {
+    //   type: String,
+    //   allowNull: true
+    // },
+    // sessionSalt: {
+    //   type: String,
+    //   allowNull: true
+    // }
 });
 
-userSchema.associate = function(models) {
-  userSchema.hasOne(models.Parent, {
-    onDelete: 'cascade'
-  });
-};
-
-userSchema.prototype.validPassword = function(password) {
-  return bcrypt.compareSync(password, this.password);
-};
-
-userSchema.addHook('beforeCreate', (user) => {
-  user.password = bcrypt.hashSync(
-    user.password,
-    bcrypt.genSaltSync(10),
-    null
-  );
-});
+userSchema.plugin(passportLocalMongoose);
 
 const User = mongoose.model('User', userSchema);
 
