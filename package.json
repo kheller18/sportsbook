@@ -1,6 +1,9 @@
 {
   "name": "sportsbook",
   "version": "1.0.0",
+  "engines": {
+    "node": "^15.3.0"
+  },
   "description": "sportsbook app",
   "main": "server.js",
   "proxy": "http://localhost:3001",
