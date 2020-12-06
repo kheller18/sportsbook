@@ -18,7 +18,7 @@ function App() {
           <Route path='/login' exact component={Login} />
           <Route path='/signup' exact component={SignUp} /> 
           <PrivateRoute path='/members' exact component={Main} />
-          {/* <Route path='*' component={Login} /> */}
+           {/* <Route path='*' component={Login} /> */}
         </Switch>
         <Footer />
       </div>
