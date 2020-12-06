@@ -32,8 +32,6 @@
     "connect-ensure-login": "^0.1.1",
     "crypto": "^1.0.1",
     "dotenv": "^8.2.0",
-    "eslint-formatter-pretty": "^4.0.0",
-    "eslint-webpack-plugin": "^2.4.1",
     "express": "^4.16.3",
     "express-session": "^1.17.1",
     "if-env": "^1.0.4",
