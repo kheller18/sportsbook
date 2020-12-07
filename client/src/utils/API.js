@@ -1,4 +1,5 @@
 import axios from 'axios';
+require('dotenv').config();
 
 export default {
   // getSports: () => {
@@ -20,20 +21,19 @@ export default {
   // },
 
   getSports: () => {
-    // const key = process.env.REACT_APP_SPORTSBOOK_API_KEY;
-    return axios.get(`https://api.the-odds-api.com/v3/sports?apiKey=${ process.env.REACT_APP_SPORTSBOOK_API_KEY }`);
+    return axios.get(`https://api.the-odds-api.com/v3/sports?apiKey=${ process.env.REACT_APP_API_KEY }`);
   },
 
   getLines: (sport, lineType) => {
     switch(lineType) {
       case 'moneyline':
-        return axios.get(`https://api.the-odds-api.com/v3/odds?&apiKey=${ process.env.REACT_APP_SPORTSBOOK_API_KEY }&sport=${ sport }&region=us&mkt=h2h&oddsFormat=american`);
+        return axios.get(`https://api.the-odds-api.com/v3/odds?&apiKey=${ process.env.REACT_APP_API_KEY }&sport=${ sport }&region=us&mkt=h2h&oddsFormat=american`);
       case 'spread':
-        return axios.get(`https://api.the-odds-api.com/v3/odds?&apiKey=${ process.env.REACT_APP_SPORTSBOOK_API_KEY }&sport=${ sport }&region=us&mkt=spreads&oddsFormat=american`);
+        return axios.get(`https://api.the-odds-api.com/v3/odds?&apiKey=${ process.env.REACT_APP_API_KEY }&sport=${ sport }&region=us&mkt=spreads&oddsFormat=american`);
       case 'totals':
-        return axios.get(`https://api.the-odds-api.com/v3/odds?&apiKey=${ process.env.REACT_APP_SPORTSBOOK_API_KEY }&sport=${ sport }&region=us&mkt=totals&oddsFormat=american`);
+        return axios.get(`https://api.the-odds-api.com/v3/odds?&apiKey=${ process.env.REACT_APP_API_KEY }&sport=${ sport }&region=us&mkt=totals&oddsFormat=american`);
       default:
-        return axios.get(`https://api.the-odds-api.com/v3/odds?&apiKey=${ process.env.REACT_APP_SPORTSBOOK_API_KEY }&sport=${ sport }&region=us&mkt=h2h&oddsFormat=american`);
+        return axios.get(`https://api.the-odds-api.com/v3/odds?&apiKey=${ process.env.REACT_APP_API_KEY }&sport=${ sport }&region=us&mkt=h2h&oddsFormat=american`);
       }
   },
 
@@ -73,7 +73,7 @@ export default {
         // console.log(response.data.accessToken);
         if (response.data.token) {
           localStorage.setItem('user', JSON.stringify(response.data.user));
-          console.log('logged in wheres user');
+          // console.log('logged in wheres user');
         }
         return response;
       })
@@ -85,10 +85,9 @@ export default {
   isLoggedIn: () => {
     // const checkLogin = JSON.parse(localStorage.getItem('user'));
     if (localStorage.getItem('user') === null) {
-      console.log('false');
+      // console.log('false');
       return false;
     }
-    console.log('true');
     return true;
   },
 

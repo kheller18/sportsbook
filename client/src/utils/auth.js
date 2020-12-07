@@ -1,20 +1,20 @@
-export default () => {
-  const crypto = require('crypto');
-  const user = JSON.parse(localStorage.getItem('user'));
+// export default () => {
+//   const crypto = require('crypto');
+//   const user = JSON.parse(localStorage.getItem('user'));
 
-  const localToken = crypto
-    .createHmac('sha256', user.accessToken)
-    .update(document.location.host)
-    .digest('hex');
+//   const localToken = crypto
+//     .createHmac('sha256', user.accessToken)
+//     .update(document.location.host)
+//     .digest('hex');
 
-  console.log(localToken);
+//   console.log(localToken);
 
-  if (user && user.accessToken && localToken) {
-    return {
-      'x-access-token': localToken,
-      'content-type': 'application/json'
-    };
-  };
+//   if (user && user.accessToken && localToken) {
+//     return {
+//       'x-access-token': localToken,
+//       'content-type': 'application/json'
+//     };
+//   };
   
-  return false;
-};
+//   return false;
+// };

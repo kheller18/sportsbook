@@ -11,7 +11,6 @@ function ActiveSports() {
     const fetchData = async () => {
       await (API.getSports())
         .then(res => {
-          // console.log(res.data.data);
           setSports(res.data.data);
           setIsLoading(false);
         })
@@ -24,7 +23,7 @@ function ActiveSports() {
 
   return (
     <div>
-      {isLoading ? '' : 
+      {isLoading ? '' :
         <SportsContext.Provider value={sports.map(sport => (sport.key))}>
           <ActiveGames />
         </SportsContext.Provider>

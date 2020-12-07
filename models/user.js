@@ -55,14 +55,6 @@ const userSchema = new Schema({
       type: Number,
       default: 1000
     }
-    // accessToken: {
-    //   type: String,
-    //   allowNull: true
-    // },
-    // sessionSalt: {
-    //   type: String,
-    //   allowNull: true
-    // }
 });
 
 userSchema.plugin(passportLocalMongoose);

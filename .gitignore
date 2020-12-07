@@ -6,6 +6,8 @@
 .pnp.js
 .env
 .gitignore
+/config.js
+/client/.env
 
 # testing
 /coverage

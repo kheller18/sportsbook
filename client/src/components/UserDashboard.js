@@ -10,12 +10,12 @@ function UserDashboard() {
   useEffect(() => {
     const userData = async () => {
       const userData = JSON.parse(localStorage.getItem('user'));
-      console.log(userData);
+      // console.log(userData);
       setUser(userData.firstName);
       const userId = userData._id;
       await API.getBets(userId)
         .then(res => {
-          console.log(res.data);
+          // console.log(res.data);
           setBets(res.data);
           // setIsLoading(false);
         })
@@ -25,7 +25,7 @@ function UserDashboard() {
     }
 
     userData()
-    console.log(bets)
+    // console.log(bets)
   }, []);
 
   return (

@@ -14,7 +14,6 @@ const Login = () => {
     API.login(email, password)
       .then((response) => {
         if (response.data.success === true) {
-          console.log('logged in loginjs')
           setIsLoggedIn(true);
         } else {
           // setIsError(true);
