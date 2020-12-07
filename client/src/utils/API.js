@@ -21,18 +21,18 @@ export default {
   // },
 
   getSports: () => {
-    let s3 = new aws.S3({
-      apiKey: process.env.REACT_APP_API_KEY
-    });
-    console.log(s3);
+    // let s3 = new aws.S3({
+    //   apiKey: process.env.REACT_APP_API_KEY
+    // });
+    // console.log(s3);
     return axios.get(`https://api.the-odds-api.com/v3/sports?apiKey=${ process.env.REACT_APP_API_KEY }`);
   },
 
   getLines: (sport, lineType) => {
-    let s3 = new aws.S3({
-      apiKey: process.env.REACT_APP_API_KEY
-    });
-    console.log(s3);
+    // let s3 = new aws.S3({
+    //   apiKey: process.env.REACT_APP_API_KEY
+    // });
+    // console.log(s3);
     switch(lineType) {
       case 'moneyline':
         return axios.get(`https://api.the-odds-api.com/v3/odds?&apiKey=${ process.env.REACT_APP_API_KEY }&sport=${ sport }&region=us&mkt=h2h&oddsFormat=american`);
@@ -65,23 +65,17 @@ export default {
 
 
   signup: (userData) => {
-    console.log(userData);
     return axios.post('/signup', userData);
   },
 
   login: (username, password) => {
-    // console.log(email);
-    // console.log(password);
     return axios.post('/login', {
       username,
       password
     })
       .then((response) => {
-        console.log(response);
-        // console.log(response.data.accessToken);
         if (response.data.token) {
           localStorage.setItem('user', JSON.stringify(response.data.user));
-          // console.log('logged in wheres user');
         }
         return response;
       })
