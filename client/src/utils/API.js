@@ -22,7 +22,7 @@ export default {
 
   getSports: () => {
     let s3 = new aws.S3({
-      apiKey = process.env.REACT_APP_API_KEY
+      apiKey: process.env.REACT_APP_API_KEY
     });
     console.log(s3);
     return axios.get(`https://api.the-odds-api.com/v3/sports?apiKey=${ process.env.REACT_APP_API_KEY }`);
@@ -30,7 +30,7 @@ export default {
 
   getLines: (sport, lineType) => {
     let s3 = new aws.S3({
-      apiKey = process.env.REACT_APP_API_KEY
+      apiKey: process.env.REACT_APP_API_KEY
     });
     console.log(s3);
     switch(lineType) {
