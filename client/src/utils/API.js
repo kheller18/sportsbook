@@ -1,5 +1,5 @@
 import axios from 'axios';
-require('dotenv').config();
+const aws = require('aws-sdk');
 
 export default {
   // getSports: () => {
@@ -21,10 +21,18 @@ export default {
   // },
 
   getSports: () => {
+    let s3 = new aws.S3({
+      apiKey = process.env.REACT_APP_API_KEY
+    });
+    console.log(s3);
     return axios.get(`https://api.the-odds-api.com/v3/sports?apiKey=${ process.env.REACT_APP_API_KEY }`);
   },
 
   getLines: (sport, lineType) => {
+    let s3 = new aws.S3({
+      apiKey = process.env.REACT_APP_API_KEY
+    });
+    console.log(s3);
     switch(lineType) {
       case 'moneyline':
         return axios.get(`https://api.the-odds-api.com/v3/odds?&apiKey=${ process.env.REACT_APP_API_KEY }&sport=${ sport }&region=us&mkt=h2h&oddsFormat=american`);
