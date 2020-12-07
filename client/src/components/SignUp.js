@@ -17,7 +17,8 @@ const SignUp = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(firstName)
+
+    // calls function to register a new user
     API.signup({
       firstName,
       lastName,
@@ -29,7 +30,6 @@ const SignUp = () => {
       password
     })
       .then(response => {
-        console.log(response);
         if (response.status === 200) {
           localStorage.setItem(
             'user',

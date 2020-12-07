@@ -32,9 +32,7 @@ const BetSlip = (e) => {
     event.preventDefault();
     event.persist();
     const userData = JSON.parse(localStorage.getItem('user'));
-    console.log(userData);
     const userId = userData._id;
-    console.log(userId);
     const gameKey = e.data.data.key;
     const betType = e.data.slipData.type;
     const team = e.data.slipData.team;
@@ -43,14 +41,13 @@ const BetSlip = (e) => {
     const payout = null;
     let line = null;
     const status = 'LIVE';
-    console.log(e);
 
+    // function to post slip data based on slip type
     const slipData = async () => {
       switch (betType) {
         case 'MONEYLINE':
           await API.submitBetSlip({userId, gameKey, betType, team, line, odds, toLose, toWin, status, outcome, payout})
-            .then((response) => {
-              console.log(response);
+            .then(() => {
             })
             .catch(err => {
               console.log(err);
@@ -59,8 +56,7 @@ const BetSlip = (e) => {
         case 'SPREAD':
           line = e.data.slipData.line;
           await API.submitBetSlip({userId, gameKey, betType, team, line, odds, toLose, toWin, status, outcome, payout})
-            .then((response) => {
-              console.log(response);
+            .then(() => {
             })
             .catch(err => {
               console.log(err);
@@ -69,8 +65,7 @@ const BetSlip = (e) => {
         case 'TOTALS-OVER':
           line = e.data.slipData.line;
           await API.submitBetSlip({userId, gameKey, betType, team, line, odds, toLose, toWin, status, outcome, payout})
-            .then((response) => {
-              console.log(response);
+            .then(() => {
             })
             .catch(err => {
               console.log(err);
@@ -79,8 +74,7 @@ const BetSlip = (e) => {
         case 'TOTALS-UNDER':
           line = e.data.slipData.line;
           await API.submitBetSlip({userId, gameKey, betType, team, line, odds, toLose, toWin, status, outcome, payout})
-            .then((response) => {
-              console.log(response);
+            .then(() => {
             })
             .catch(err => {
               console.log(err);
@@ -98,24 +92,24 @@ const BetSlip = (e) => {
   return (
     <div className='slip'>
       <div className='slip-title'>BET SLIP</div>
-      {e.data.isLoading ? '' : 
+      {e.data.isLoading ? '' :
         <div className='slip-body'>
           <div className='slip-exit'>X</div>
           <div className='slip-away-team'>{e.data.data.awayTeam}</div>
           <div className='slip-home-team'>vs. {e.data.data.homeTeam}</div>
-          {e.data.slipData.type === 'MONEYLINE' ?  
+          {e.data.slipData.type === 'MONEYLINE' ?
             <div className='slip-bet-info'><b>MONEYLINE:</b> {e.data.slipData.team} ({e.data.slipData.odds})</div> :
           ''
           }
-          {e.data.slipData.type === 'SPREAD' ?  
+          {e.data.slipData.type === 'SPREAD' ?
             <div className='slip-bet-info'><b>SPREAD:</b> {e.data.slipData.team} {e.data.slipData.line} ({e.data.slipData.odds})</div> :
           ''
           }
-          {e.data.slipData.type === 'TOTALS-UNDER' ?  
+          {e.data.slipData.type === 'TOTALS-UNDER' ?
             <div className='slip-bet-info'><b>TOTAL:</b> {e.data.slipData.team} U/{e.data.slipData.line} ({e.data.slipData.odds})</div> :
           ''
           }
-          {e.data.slipData.type === 'TOTALS-OVER' ?  
+          {e.data.slipData.type === 'TOTALS-OVER' ?
             <div className='slip-bet-info'><b>TOTAL:</b> {e.data.slipData.team} O/{e.data.slipData.line} ({e.data.slipData.odds})</div> :
           ''
           }
@@ -138,7 +132,7 @@ const BetSlip = (e) => {
             <button onClick={(event) => handleSubmit(event)} className='slip-button' id='submit-slip'>PLACE BET</button>
           </div>
       </div>
-      }      
+      }
     </div>
   );
 };

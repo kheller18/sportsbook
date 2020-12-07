@@ -11,6 +11,8 @@ const Login = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    // login function
     API.login(email, password)
       .then((response) => {
         if (response.data.success === true) {

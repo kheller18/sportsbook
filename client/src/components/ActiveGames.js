@@ -10,21 +10,25 @@ function ActiveGames() {
   const sports = useContext(SportsContext);
 
   useEffect(() => {
+    // gets moneyline data
     const getMoneyLineData = async () => {
       const response = await API.getLines(sports[1], 'moneyline');
       return response.data.data;
     };
 
+    // gets spread data
     const getSpreadData = async () => {
       const response = await API.getLines(sports[1], 'spread');
       return response.data.data;
     };
 
+    // gets totals data
     const getTotalsData = async () => {
       const response = await API.getLines(sports[1], 'totals');
       return response.data.data;
     };
 
+    // promise all for all functions to run
     Promise.all([getMoneyLineData(), getSpreadData(), getTotalsData()])
       .then(values => {
         setGames({

@@ -1,11 +1,9 @@
 const router = require('express').Router();
 const passport = require('passport')
-// const crypto = require('./crypto');
 const BetSlip = require('../models/betSlip');
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 // const connectEnsureLogin = require('connect-ensure-login');
-// const { createPrivateKey } = require('crypto');
 
 router.post('/api/bet', (req , res) => {
   BetSlip.create(req.body)
@@ -44,7 +42,6 @@ router.get('/api/bet', (req, res) => {
       res.status(400).json(err);
     });
 });
-
 
 router.post('/signup', (req, res) => {
   const Users = new User({

@@ -8,24 +8,20 @@ function UserDashboard() {
   const [user, setUser] = useState('');
 
   useEffect(() => {
+    // function to get user data for indiviaulized dashboard
     const userData = async () => {
       const userData = JSON.parse(localStorage.getItem('user'));
-      // console.log(userData);
       setUser(userData.firstName);
       const userId = userData._id;
       await API.getBets(userId)
         .then(res => {
-          // console.log(res.data);
           setBets(res.data);
-          // setIsLoading(false);
         })
         .catch(err => {
           console.log(err);
         })
     }
-
     userData()
-    // console.log(bets)
   }, []);
 
   return (

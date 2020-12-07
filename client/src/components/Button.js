@@ -1,5 +1,6 @@
 import React from 'react';
 
+// mmodule for dynamic button creation
 const Button = (props) => {
   return (
     <button

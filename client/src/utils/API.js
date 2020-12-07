@@ -1,38 +1,13 @@
 import axios from 'axios';
-const aws = require('aws-sdk');
 
 export default {
-  // getSports: () => {
-  //   // const key = process.env.REACT_APP_SPORTSBOOK_API_KEY;
-  //   return axios.get(`https://api.the-odds-api.com/v3/sports?apiKey=c5e2d28e6740946d4477ea4d7107dbe6`);
-  // },
-
-  // getLines: (sport, lineType) => {
-  //   switch(lineType) {
-  //     case 'moneyline':
-  //       return axios.get(`https://api.the-odds-api.com/v3/odds?&apiKey=830ac2ee276b5d7d96c261fb3ed3028d&sport=${ sport }&region=us&mkt=h2h&oddsFormat=american`);
-  //     case 'spread':
-  //       return axios.get(`https://api.the-odds-api.com/v3/odds?&apiKey=830ac2ee276b5d7d96c261fb3ed3028d&sport=${ sport }&region=us&mkt=spreads&oddsFormat=american`);
-  //     case 'totals':
-  //       return axios.get(`https://api.the-odds-api.com/v3/odds?&apiKey=830ac2ee276b5d7d96c261fb3ed3028d&sport=${ sport }&region=us&mkt=totals&oddsFormat=american`);
-  //     default:
-  //       return axios.get(`https://api.the-odds-api.com/v3/odds?&apiKey=830ac2ee276b5d7d96c261fb3ed3028d&sport=${ sport }&region=us&mkt=h2h&oddsFormat=american`);
-  //     }
-  // },
-
+  //call to get active sports to call for "getLines"
   getSports: () => {
-    // let s3 = new aws.S3({
-    //   apiKey: process.env.REACT_APP_API_KEY
-    // });
-    // console.log(s3);
     return axios.get(`https://api.the-odds-api.com/v3/sports?apiKey=${ process.env.REACT_APP_API_KEY }`);
   },
 
+  // call to get different api lines depending on sports and linetype
   getLines: (sport, lineType) => {
-    // let s3 = new aws.S3({
-    //   apiKey: process.env.REACT_APP_API_KEY
-    // });
-    // console.log(s3);
     switch(lineType) {
       case 'moneyline':
         return axios.get(`https://api.the-odds-api.com/v3/odds?&apiKey=${ process.env.REACT_APP_API_KEY }&sport=${ sport }&region=us&mkt=h2h&oddsFormat=american`);
@@ -45,7 +20,7 @@ export default {
       }
   },
 
-
+  // submits a bet
   submitBetSlip: (betInfo) => {
     console.log(betInfo);
     return axios.post('/api/bet', {
@@ -53,21 +28,19 @@ export default {
     });
   },
 
-  // getBets: () => {
-  //   return axios.get('/api/bet');
-  // },
-
+  // gets bets per user
   getBets: (userId) => {
     return axios.get('/api/bet', {
       userId
     });
   },
 
-
+  // post for a new user
   signup: (userData) => {
     return axios.post('/signup', userData);
   },
 
+  // posts for logging in
   login: (username, password) => {
     return axios.post('/login', {
       username,
@@ -84,15 +57,15 @@ export default {
       });
   },
 
+  // checks if user is logged in
   isLoggedIn: () => {
-    // const checkLogin = JSON.parse(localStorage.getItem('user'));
     if (localStorage.getItem('user') === null) {
-      // console.log('false');
       return false;
     }
     return true;
   },
 
+  // logs user out
   logout: () => {
     localStorage.removeItem('user');
   }

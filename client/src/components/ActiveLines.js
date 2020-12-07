@@ -8,12 +8,13 @@ const ActiveLines = () => {
   const [lines, setLines] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const games = useContext(GamesContext);
-  
+
   useEffect(() => {
     setLines(gameInfo(games));
     setIsLoading(false);
   }, []);
 
+  // function to format the data
   const formatDate = (seconds) => {
     const gmtDate = new Date(seconds * 1000);
     const myTimeZone = 'America/Toronto';
@@ -27,12 +28,13 @@ const ActiveLines = () => {
   const gameInfo = (gameData) => {
     const gameInfoArray = [];
 
+    // function to push all lines data to an array
     for (let i = 0; i < gameData.moneyline.length; i++) {
       const formattedDate = formatDate(gameData.moneyline[i].commence_time);
       const moneyLineData = gameData.moneyline[i];
       const spreadData = gameData.spread[i];
       const totalsData = gameData.total[i];
-      
+
       if (!moneyLineData.sites[0] || !spreadData.sites[0] || !totalsData.sites[0]) {
       } else {
         gameInfoArray.push({
@@ -53,7 +55,7 @@ const ActiveLines = () => {
           siteRetrieved: gameData.moneyline[i].sites[0].site_key,
           gameDate: formattedDate[0],
           gameTimeEst: formattedDate[1]
-        });  
+        });
       }
     };
     return gameInfoArray;
@@ -61,7 +63,7 @@ const ActiveLines = () => {
 
   return (
     <div>
-      {isLoading ? '' : 
+      {isLoading ? '' :
         <ActiveLinesContext.Provider value={lines}>
           <RenderLines />
         </ActiveLinesContext.Provider>

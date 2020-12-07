@@ -1,5 +1,4 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const path = require('path');
 const mongoose = require('mongoose')
 const routes = require('./routes/api.js');
@@ -17,8 +16,6 @@ const expressSession = require('express-session')({
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-// app.use(express.static(__dirname + '/public'));
-
 app.use(expressSession);
 app.use(passport.initialize());
 app.use(passport.session());

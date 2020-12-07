@@ -8,6 +8,7 @@ function ActiveSports() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    // fetches active sports
     const fetchData = async () => {
       await (API.getSports())
         .then(res => {

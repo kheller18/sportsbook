@@ -9,13 +9,12 @@ const RenderLines = () => {
   const [clickData, setClickData] = useState({ data: null, slipData: null, isLoading: true })
   const sportsLines = useContext(ActiveLinesContext);
   const header = ['TIME', 'TEAM', 'MONEY', 'SPREAD', 'TOTAL'];
-  
+
   const handleClick = (e, game) => {
     e.preventDefault();
     e.persist();
-    console.log(e);
-    console.log(e.target.id);
-    console.log(game);
+
+    // sets click data for bet slips
     switch (e.target.id) {
       case 'away-moneyline':
         setClickData({ data: game, slipData: {team: game.awayTeam, odds: game.awayMoneyLine, type: 'MONEYLINE'},  isLoading: false });
@@ -30,7 +29,6 @@ const RenderLines = () => {
         setClickData({ data: game, slipData: {team: game.homeTeam, odds: game.homeMoneyLine, type: 'MONEYLINE'},  isLoading: false });
         break;
       case 'home-spread':
-        console.log('homespread');
         setClickData({ data: game, slipData: {team: game.homeTeam, line: game.homeSpread, odds: game.homeSpreadOdds, type: 'SPREAD'},  isLoading: false });
         break;
       case 'under':
@@ -43,7 +41,6 @@ const RenderLines = () => {
   };
 
   useEffect(() => {
-    console.log(clickData);
   }, [handleClick]);
 
   return (
@@ -73,13 +70,13 @@ const RenderLines = () => {
                             <tr>
                               <td className='render-team'>{game.awayTeam}</td>
                               <td className='render-button'>
-                                <Button 
+                                <Button
                                   onClick={(e) => handleClick(e, game)}
                                   value={{
                                       slipInfo: {
                                         team: game.awayTeam,
                                         odds: game.awayMoneyLine
-                                      } 
+                                      }
                                   }}
                                   data={game}
                                   className='render-moneyline'
@@ -89,7 +86,7 @@ const RenderLines = () => {
                                 </Button>
                               </td>
                               <td className='render-button'>
-                                <Button 
+                                <Button
                                   onClick={(e) => handleClick(e, game)}
                                   value={[
                                     game.awayTeam,
@@ -103,7 +100,7 @@ const RenderLines = () => {
                                 </Button>
                               </td>
                               <td className='render-button'>
-                                <Button 
+                                <Button
                                   onClick={(e) => handleClick(e, game)}
                                   value={[
                                     game.awayTeam,
@@ -139,7 +136,7 @@ const RenderLines = () => {
                             <tr>
                               <td className='render-team'>{game.homeTeam}</td>
                               <td className='render-button'>
-                                <Button 
+                                <Button
                                   onClick={(e) => handleClick(e, game)}
                                   value={[{
                                     away: game.homeTeam,
@@ -153,7 +150,7 @@ const RenderLines = () => {
                                 </Button>
                               </td>
                               <td className='render-button'>
-                                <Button 
+                                <Button
                                   onClick={(e) => handleClick(e, game)}
                                   value={[
                                     game.homeTeam,
@@ -167,7 +164,7 @@ const RenderLines = () => {
                                 </Button>
                               </td>
                               <td className='render-button'>
-                                <Button 
+                                <Button
                                   onClick={(e) => handleClick(e, game)}
                                   value={[
                                     game.homeTeam,
