@@ -12,7 +12,7 @@ const ActiveLines = () => {
   useEffect(() => {
     setLines(gameInfo(games));
     setIsLoading(false);
-  }, []);
+  }, [games]);
 
   // function to format the data
   const formatDate = (seconds) => {

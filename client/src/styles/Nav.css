@@ -1,9 +1,13 @@
-.nav {
+.nav-container {
   display: flex;
   flex-direction: column;
 }
 
-.nav-header {
+.nav-button {
+  width: 220px
+}
+
+/* .nav-header {
   display: flex;
   margin-left: 10px;
   color: blue;
@@ -20,4 +24,4 @@
   flex-direction: row;
   list-style-type: none;
   color: green;
-}
+} */

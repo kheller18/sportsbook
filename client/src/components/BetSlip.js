@@ -5,7 +5,7 @@ import API from '../utils/API';
 const BetSlip = (e) => {
   const [toLose, setToLose] = useState(undefined);
   const [toWin, setToWin] = useState();
-  
+
   useEffect(() => {
 
   }, [e]);

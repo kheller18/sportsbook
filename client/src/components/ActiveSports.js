@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import API from '../utils/API';
 import ActiveGames from './ActiveGames';
+import Nav from './Nav';
 export const SportsContext = React.createContext();
 
 function ActiveSports() {
@@ -12,6 +13,7 @@ function ActiveSports() {
     const fetchData = async () => {
       await (API.getSports())
         .then(res => {
+          console.log(res.data.data);
           setSports(res.data.data);
           setIsLoading(false);
         })
@@ -26,7 +28,8 @@ function ActiveSports() {
     <div>
       {isLoading ? '' :
         <SportsContext.Provider value={sports.map(sport => (sport.key))}>
-          <ActiveGames />
+          {/* <ActiveGames /> */}
+          <Nav data={{loading: false}}/>
         </SportsContext.Provider>
       }
     </div>

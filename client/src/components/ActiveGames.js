@@ -1,30 +1,33 @@
 import React, { useEffect, useState, useContext } from 'react';
 import API from '../utils/API';
 import ActiveLines from './ActiveLines';
+import Nav from './Nav';
 import { SportsContext } from './ActiveSports';
 export const GamesContext = React.createContext();
 
-function ActiveGames() {
+const ActiveGames = (props) => {
   const [games, setGames] = useState({ moneyline: null, spread: null, total: null });
   const [isLoading, setIsLoading] = useState(true);
   const sports = useContext(SportsContext);
+  // console.log(props);
 
   useEffect(() => {
+    console.log(props);
     // gets moneyline data
     const getMoneyLineData = async () => {
-      const response = await API.getLines(sports[1], 'moneyline');
+      const response = await API.getLines(props.data.sport, 'moneyline');
       return response.data.data;
     };
 
     // gets spread data
     const getSpreadData = async () => {
-      const response = await API.getLines(sports[1], 'spread');
+      const response = await API.getLines(props.data.sport, 'spread');
       return response.data.data;
     };
 
     // gets totals data
     const getTotalsData = async () => {
-      const response = await API.getLines(sports[1], 'totals');
+      const response = await API.getLines(props.data.sport, 'totals');
       return response.data.data;
     };
 
@@ -43,13 +46,14 @@ function ActiveGames() {
         console.log(err);
         setIsLoading(false)
       });
-  }, []);
+  }, [props]);
 
   return (
     <div>
-      {isLoading ? '' :
+      {(isLoading) ? '' :
         <GamesContext.Provider value={games}>
           <ActiveLines />
+          {/* <Nav /> */}
         </GamesContext.Provider>
       }
     </div>
