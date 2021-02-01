@@ -32,18 +32,11 @@ const Nav = (props) => {
 
   return (
     <div className='nav-container'>
-      <div className=''>Sports</div>
+      <div className='nav-header'>Sports</div>
         {props.data.loading ? '' : sports.map(sport => {
           return(
             <Button
               onClick={(e) => handleClick(e, sport)}
-              // onClick={(e) => <ActiveGames data={e.target.innerHTML} />}
-              // value={{
-              //     slipInfo: {
-              //       team: game.awayTeam,
-              //       odds: game.awayMoneyLine
-              //     }
-              // }}
               data={sport}
               className='nav-button'
               // id='away-moneyline'

@@ -5,7 +5,7 @@ const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 // const connectEnsureLogin = require('connect-ensure-login');
 
-router.post('/api/bet', (req , res) => {
+router.post('/api/bet', (req, res) => {
   BetSlip.create(req.body)
     .then(dbBetSlip => {
       console.log(dbBetSlip);

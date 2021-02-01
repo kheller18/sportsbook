@@ -7,6 +7,18 @@
   width: 220px
 }
 
+.nav-header {
+  text-align: left;
+}
+
+.scroll-container {
+  /* padding-left: 10px;
+  padding-right: 10px; */
+  height: 375px;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
 /* .nav-header {
   display: flex;
   margin-left: 10px;
