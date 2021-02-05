@@ -6,10 +6,22 @@ const jwt = require('jsonwebtoken');
 // const connectEnsureLogin = require('connect-ensure-login');
 
 router.post('/api/bet', (req, res) => {
+  console.log(req.body)
   BetSlip.create(req.body)
     .then(dbBetSlip => {
       console.log(dbBetSlip);
       res.json(dbBetSlip);
+    })
+    .catch(err => {
+      res.status(404).json(err);
+    });
+});
+
+router.post('/api/bet/bulk', (req, res) => {
+  console.log(req.body)
+  BetSlip.insertMany(req.body)
+    .then(dbSlip => {
+      res.json(dbSlip);
     })
     .catch(err => {
       res.status(404).json(err);

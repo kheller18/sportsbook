@@ -23,9 +23,15 @@ export default {
   // submits a bet
   submitBetSlip: (betInfo) => {
     console.log(betInfo);
-    return axios.post('/api/bet', {
-      betInfo
-    });
+    if (betInfo.length === 1) {
+      return axios.post('/api/bet', {
+        betInfo
+      });  
+    } else {
+      return axios.post('/api/bet/bulk', {
+        betInfo
+      });
+    }
   },
 
   // gets bets per user

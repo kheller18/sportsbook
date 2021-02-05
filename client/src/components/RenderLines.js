@@ -2,15 +2,48 @@ import React, { useContext, useEffect, useState } from 'react';
 import { ActiveLinesContext } from './ActiveLines';
 import '../styles/RenderLines.css'
 import BetSlip from './BetSlip';
+import RenderBetSlips from './RenderBetSlips';
 import Button from './Button';
 export const RenderLinesContext = React.createContext();
 
-const RenderLines = () => {
+const RenderLines = (props) => {
   // const [clickData, setClickData] = useState({ data: null, slipData: null, isLoading: true })
   // const [clickData, setClickData] = useState([{ data: null, slipData: null, isLoading: true }])
-  const [clickData, setClickData] = useState([])
+  // const [clickData, setClickData] = useState([])
+  const [clickData, setClickData] = useState()
   const sportsLines = useContext(ActiveLinesContext);
   const header = ['TIME', 'TEAM', 'MONEY', 'SPREAD', 'TOTAL'];
+
+  // const handleClick = (e, game) => {
+  //   e.preventDefault();
+  //   e.persist();
+
+  //   // sets click data for bet slips
+  //   switch (e.target.id) {
+  //     case 'away-moneyline':
+  //       setClickData([...clickData, { data: game, slipData: {team: game.awayTeam, odds: game.awayMoneyLine, type: 'MONEYLINE'},  isLoading: false }]);
+  //       break;
+  //     case 'away-spread':
+  //       setClickData([...clickData, { data: game, slipData: {team: game.awayTeam, line: game.awaySpread, odds: game.awaySpreadOdds, type: 'SPREAD'},  isLoading: false }]);
+  //       break;
+  //     case 'over':
+  //       setClickData([...clickData, { data: game, slipData: {team: game.awayTeam, line: game.overUnder, odds: game.overOdds, type: 'TOTALS-OVER'},  isLoading: false }]);
+  //       break;
+  //     case 'home-moneyline':
+  //       setClickData([...clickData, { data: game, slipData: {team: game.homeTeam, odds: game.homeMoneyLine, type: 'MONEYLINE'},  isLoading: false }]);
+  //       break;
+  //     case 'home-spread':
+  //       setClickData([...clickData, { data: game, slipData: {team: game.homeTeam, line: game.homeSpread, odds: game.homeSpreadOdds, type: 'SPREAD'},  isLoading: false }]);
+  //       break;
+  //     case 'under':
+  //       setClickData([...clickData, { data: game, slipData: {team: game.homeTeam, line: game.overUnder, odds: game.underOdds, type: 'TOTALS-UNDER'},  isLoading: false }]);
+  //       break;
+  //     default:
+  //       console.log('None selected.')
+  //   };
+  //   console.log(clickData);
+  //   // <BetSlip data={clickData} />
+  // };
 
   const handleClick = (e, game) => {
     e.preventDefault();
@@ -19,31 +52,34 @@ const RenderLines = () => {
     // sets click data for bet slips
     switch (e.target.id) {
       case 'away-moneyline':
-        setClickData([...clickData, { data: game, slipData: {team: game.awayTeam, odds: game.awayMoneyLine, type: 'MONEYLINE'},  isLoading: false }]);
+        setClickData({ data: game, slipData: {team: game.awayTeam, line: null, odds: game.awayMoneyLine, type: 'MONEYLINE', toWin: null, toLose: null, outcome: null, status: 'LIVE', payout: null}, isLoading: false });
         break;
       case 'away-spread':
-        setClickData([...clickData, { data: game, slipData: {team: game.awayTeam, line: game.awaySpread, odds: game.awaySpreadOdds, type: 'SPREAD'},  isLoading: false }]);
+        setClickData({ data: game, slipData: {team: game.awayTeam, line: game.awaySpread, odds: game.awaySpreadOdds, type: 'SPREAD', toWin: null, toLose: null, outcome: null, status: 'LIVE', payout: null},  isLoading: false });
         break;
       case 'over':
-        setClickData([...clickData, { data: game, slipData: {team: game.awayTeam, line: game.overUnder, odds: game.overOdds, type: 'TOTALS-OVER'},  isLoading: false }]);
+        setClickData({ data: game, slipData: {team: game.awayTeam, line: game.overUnder, odds: game.overOdds, type: 'TOTALS-OVER', toWin: null, toLose: null, outcome: null, status: 'LIVE', payout: null},  isLoading: false });
         break;
       case 'home-moneyline':
-        setClickData([...clickData, { data: game, slipData: {team: game.homeTeam, odds: game.homeMoneyLine, type: 'MONEYLINE'},  isLoading: false }]);
+        setClickData({ data: game, slipData: {team: game.homeTeam, line: null, odds: game.homeMoneyLine, type: 'MONEYLINE', toWin: null, toLose: null, outcome: null, status: 'LIVE', payout: null},  isLoading: false });
         break;
       case 'home-spread':
-        setClickData([...clickData, { data: game, slipData: {team: game.homeTeam, line: game.homeSpread, odds: game.homeSpreadOdds, type: 'SPREAD'},  isLoading: false }]);
+        setClickData({ data: game, slipData: {team: game.homeTeam, line: game.homeSpread, odds: game.homeSpreadOdds, type: 'SPREAD', toWin: null, toLose: null, outcome: null, status: 'LIVE', payout: null},  isLoading: false });
         break;
       case 'under':
-        setClickData([...clickData, { data: game, slipData: {team: game.homeTeam, line: game.overUnder, odds: game.underOdds, type: 'TOTALS-UNDER'},  isLoading: false }]);
+        setClickData({ data: game, slipData: {team: game.homeTeam, line: game.overUnder, odds: game.underOdds, type: 'TOTALS-UNDER', toWin: null, toLose: null, outcome: null, status: 'LIVE', payout: null},  isLoading: false });
         break;
       default:
         console.log('None selected.')
     };
     console.log(clickData);
+    // <RenderBetSlips data={clickData} />
   };
 
   useEffect(() => {
-  }, [handleClick]);
+    console.log('heres the data', clickData)
+
+  }, []);
 
   return (
     <div className='container'>
@@ -74,13 +110,6 @@ const RenderLines = () => {
                               <td className='render-button'>
                                 <Button
                                   onClick={(e) => handleClick(e, game)}
-                                  value={{
-                                      slipInfo: {
-                                        team: game.awayTeam,
-                                        odds: game.awayMoneyLine
-                                      }
-                                  }}
-                                  data={game}
                                   className='render-moneyline'
                                   id='away-moneyline'
                                 >
@@ -90,11 +119,6 @@ const RenderLines = () => {
                               <td className='render-button'>
                                 <Button
                                   onClick={(e) => handleClick(e, game)}
-                                  value={[
-                                    game.awayTeam,
-                                    game.awaySpread
-                                  ]}
-                                  data={{data: game}}
                                   className='render-spread'
                                   id='away-spread'
                                 >
@@ -104,11 +128,6 @@ const RenderLines = () => {
                               <td className='render-button'>
                                 <Button
                                   onClick={(e) => handleClick(e, game)}
-                                  value={[
-                                    game.awayTeam,
-                                    game.awaySpread
-                                  ]}
-                                  data={game}
                                   className='render-over'
                                   id='over'
                                 >
@@ -140,11 +159,6 @@ const RenderLines = () => {
                               <td className='render-button'>
                                 <Button
                                   onClick={(e) => handleClick(e, game)}
-                                  value={[{
-                                    away: game.homeTeam,
-                                    line: game.homeMoneyLine
-                                  }]}
-                                  data={game}
                                   className='render-moneyline'
                                   id='home-moneyline'
                                 >
@@ -154,11 +168,6 @@ const RenderLines = () => {
                               <td className='render-button'>
                                 <Button
                                   onClick={(e) => handleClick(e, game)}
-                                  value={[
-                                    game.homeTeam,
-                                    game.homeSpread
-                                  ]}
-                                  data={{data: game}}
                                   className='render-spread'
                                   id='home-spread'
                                 >
@@ -168,11 +177,6 @@ const RenderLines = () => {
                               <td className='render-button'>
                                 <Button
                                   onClick={(e) => handleClick(e, game)}
-                                  value={[
-                                    game.homeTeam,
-                                    game.homeSpread
-                                  ]}
-                                  data={game}
                                   className='render-over'
                                   id='under'
                                 >
@@ -191,7 +195,7 @@ const RenderLines = () => {
           </div>
       </div>
       <div className='bet-slip'>
-        <BetSlip data={clickData} />
+        <RenderBetSlips data={clickData} />
       </div>
     </div>
   );
