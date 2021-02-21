@@ -18,7 +18,7 @@ const ActiveLines = () => {
   const formatDate = (seconds) => {
     const gmtDate = new Date(seconds * 1000);
     const myTimeZone = 'America/Toronto';
-    const myDateTimeFormat = 'MM/D YYYY h:mm a z';
+    const myDateTimeFormat = 'MM/DD YYYY h:mm a z';
     const formattedDateTime = moment(gmtDate).tz(myTimeZone).format(myDateTimeFormat).split('2020 ');
     const formattedDate = formattedDateTime[0];
     const formattedTime = formattedDateTime[1];
@@ -62,7 +62,7 @@ const ActiveLines = () => {
   };
 
   return (
-    <div>
+    <div className='test'>
       {isLoading ? '' :
         <ActiveLinesContext.Provider value={lines}>
           <RenderLines />

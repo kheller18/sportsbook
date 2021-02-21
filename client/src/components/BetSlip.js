@@ -10,7 +10,7 @@ const BetSlip = (props) => {
   console.log(props)
   // props.toWin = toWin
   // props.toLose = toLose
-  
+
   const [toLose, setToLose] = useState(undefined);
   const [toWin, setToWin] = useState();
   const [allSlips, setAllSlips] = useState({
@@ -24,12 +24,10 @@ const BetSlip = (props) => {
     toLose: props.data.slipData.toLose,
     toWin: props.data.slipData.toWin,
     line: null
-
   })
 
   console.log(allSlips);
   // const handleChange = (e, data) => {
-    
   //   console.log(data);
   //   console.log(e);
   //   console.log(data.slipData.odds.toString()[0]);
@@ -111,11 +109,10 @@ const BetSlip = (props) => {
       }
       <div className='slip-money'>
         <div className='slip-risk-money'>
-          <label>TO RISK</label>
+          <label>RISK</label>
           <br />
           <br />
           {/* <input type='text' className='slip-to-lose' value={props.toLose} placeholder={props.toLose} onChange={(event) => handleChange(event, props.data)} /> */}
-          
           {/* <input type='text' className='slip-to-lose' name='to-lose' id={props.id} value={props.toLose} placeholder={props.toLose} onChange={(event) => handleChange(event, props.data)} /> */}
           <Input
               // onChange={(event) => handleChange(event.target.value, props.data.slipData)}
@@ -126,8 +123,8 @@ const BetSlip = (props) => {
               type='text'
               value={props.data.slipData.toLose}
               placeholder={props.data.slipData.toLose}
-          /> 
-        </div> 
+          />
+        </div>
         <div className='slip-win-money'>
           <label>TO WIN</label>
           <br />
@@ -137,10 +134,9 @@ const BetSlip = (props) => {
             type='text'
             value={toWin}
           /> */}
-          <div className='slip-to-win'>{props.data.slipData.toWin}</div> 
+          <div className='slip-to-win'>{props.data.slipData.toWin}</div>
         </div>
-      </div> 
-      
+      </div>
       {/* <div className='slip-buttons'>
         <Button
           onClick={props.onRemove}

@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import '../styles/BetSlip.css';
+// import '../styles/BetSlip.css';
 import API from '../utils/API';
 import BetSlip from './BetSlip';
 import Button from './Button';
+import BetSlipConfirm from './BetSlipConfirm'
 
 const RenderBetSlips = (props) => {
   const [toLose, setToLose] = useState(undefined);
   const [toWin, setToWin] = useState();
   let newSlips = props.data;
+  console.log()
   const slipSend = [];
   const [submitSlips, setSubmitSlips] = useState([]);
   const [slipList, setSlipList] = useState([]);
+  const [submittedSlips, setSubmittedSlips] = useState([])
+  const [isSubmitted, setIsSubmitted] = useState(false)
+  let send = true;
 
   const handleDelete = (e) => {
     console.log(e);
@@ -39,9 +44,14 @@ const RenderBetSlips = (props) => {
     }
   }
 
+  const updatePage = () => {
+    setIsSubmitted(true)
+    setSlipList([])
+    // setTimout((), 5000)
+  }
+
   const handleChange = (e, data) => {
     console.log(data);
-    
     console.log(e);
     console.log(data.odds.toString()[0]);
     switch (data.odds.toString()[0]) {
@@ -86,116 +96,61 @@ const RenderBetSlips = (props) => {
     event.persist();
     console.log(slipList);
     const userData = JSON.parse(localStorage.getItem('user'));
-    // const userId = userData._id;
-    // const gameKey = props.data.data.key;
-    // const betType = props.data.slipData.type;
-    // const team = props.data.slipData.team;
-    // const odds = props.data.slipData.odds;
-    // const outcome = null;
-    // const payout = null;
-    // const toLose = null;
-    // const toWin = null;
-    // let line = null;
-    // const status = 'LIVE';
 
     // function to post slip data based on slip type
     const slipData = async () => {
-      // switch (betType) {
-      //   case 'MONEYLINE':
-      //     await API.submitBetSlip({userId, gameKey, betType, team, line, odds, toLose, toWin, status, outcome, payout})
-      //       .then((res) => {
-      //         console.log(res);
-      //       })
-      //       .catch(err => {
-      //         console.log(err);
-      //       });
-      //     break;
-      //   case 'SPREAD':
-      //     line = props.data.slipData.line;
-      //     await API.submitBetSlip({userId, gameKey, betType, team, line, odds, toLose, toWin, status, outcome, payout})
-      //       .then((res) => {
-      //         console.log(res);
-      //       })
-      //       .catch(err => {
-      //         console.log(err);
-      //       });
-      //     break;
-      //   case 'TOTALS-OVER':
-      //     line = props.data.slipData.line;
-      //     await API.submitBetSlip({userId, gameKey, betType, team, line, odds, toLose, toWin, status, outcome, payout})
-      //       .then((res) => {
-      //         console.log(res);
-      //       })
-      //       .catch(err => {
-      //         console.log(err);
-      //       });
-      //     break;
-      //   case 'TOTALS-UNDER':
-      //     line = props.data.slipData.line;
-      //     await API.submitBetSlip({userId, gameKey, betType, team, line, odds, toLose, toWin, status, outcome, payout})
-      //       .then((res) => {
-      //         console.log(res);
-      //       })
-      //       .catch(err => {
-      //         console.log(err);
-      //       });
-      //     break;
-      //   default:
-      //     console.log('none selected');
-      //     break;
-      // }
-
-      
-      // slipList.map(slip => {
-      //   console.log(slip)
-      //   setSubmitSlips([...submitSlips, {
-      //     userId: userData._id,
-      //     gameKey: slip.data.key,
-      //     betType: slip.slipData.type,
-      //     team: slip.slipData.team,
-      //     line: slip.slipData.line,
-      //     odds: slip.slipData.odds,
-      //     toLose: slip.slipData.toLose,
-      //     toWin: slip.slipData.toWin,
-      //     status: slip.slipData.status,
-      //     outcome: slip.slipData.outcome,
-      //     payout: slip.slipData.payout
-      //   }])
-      // });
 
       slipList.map(slip => {
         console.log(slip)
-        slipSend.push({
-          userId: userData._id,
-          gameKey: slip.data.key,
-          betType: slip.slipData.type,
-          team: slip.slipData.team,
-          line: slip.slipData.line,
-          odds: slip.slipData.odds,
-          toLose: slip.slipData.toLose,
-          toWin: slip.slipData.toWin,
-          status: slip.slipData.status,
-          outcome: slip.slipData.outcome,
-          payout: slip.slipData.payout
-        })
+        console.log(slip.slipData.toLose)
+        if (slip.slipData.toLose === '' || slip.slipData.toLose < 5) {
+
+          console.log('nope')
+          send = false;
+
+        } else {
+          slipSend.push({
+            userId: userData._id,
+            gameKey: slip.data.key,
+            betType: slip.slipData.type,
+            team: slip.slipData.team,
+            line: slip.slipData.line,
+            odds: slip.slipData.odds,
+            toLose: slip.slipData.toLose,
+            toWin: slip.slipData.toWin,
+            status: slip.slipData.status,
+            outcome: slip.slipData.outcome,
+            payout: slip.slipData.payout
+          })
+        }
       })
 
-      await API.submitBetSlip(slipSend)
-        .then((res) => {
-          console.log(res);
-        })
-        .catch(err => {
-          console.log(err);
-        });
-      
+      if (send === true) {
+        await API.submitBetSlip(slipSend)
+          .then((res) => {
+            console.log(res);
+            if (res.status === 200) {
+              console.log('200')
+              // setIsSubmitted(true);
+              updatePage();
+              // return (
+              //   <div>
+              //     <BetSlipConfirm data={res.data} />
+              //   </div>
+              // )
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
+
 
 
     };
 
     slipData();
   };
-
-  
 
   useEffect(() => {
     // setSlips(slips);
@@ -208,7 +163,6 @@ const RenderBetSlips = (props) => {
     } else {
       setSlipList(slipList => [...slipList, newSlips])
       console.log("added")
-      
     }
     console.log(slipList)
     // setSlips(slips)
@@ -218,34 +172,43 @@ const RenderBetSlips = (props) => {
   return (
     <div className='slip'>
       <div className='slip-title'>BET SLIP</div>
-      {(slipList === undefined || slipList.length === 0) ? '' :
-        slipList.map((slip, i) => {
-          return (
-            <div>
-              <BetSlip data={slip} id={i} onRemove={handleDelete} onSubmit={handleSubmit} onChange={handleChange} onUpdate={updateSlip} toWin={toWin}/>
-            </div>
-          )
-        })
-      }
-      <div className='slip-buttons'>
-        <Button
-          onClick={handleClear}
-          id={props.id}
-          type='button'
-          className='slip-button'
-        >
-          CANCEL
-        </Button>
-        <Button
-          onClick={handleSubmit}
-          className='slip-button'
-          id='submit-slip'
-        >
-          PLACE BET
-        </Button>
-        {/* <button onClick={(event) => handleSubmit(event)} className='slip-button' id='submit-slip'>PLACE BET</button> */}
+      <div className='slip-tabs'>
+        <div className='slip-tab'>CART</div>
+        <div className='slip-tab'>PENDING</div>
       </div>
-
+      {/* {(isSubmitted !== true && slipList !== undefined && slipList.length !== 0) ? */}
+      {(slipList !== undefined && slipList.length !== 0) ?
+        // (slipList === undefined || slipList.length === 0) ? '' :
+          slipList.map((slip, i) => {
+            return (
+              <div key={slip.data.key}>
+                <BetSlip data={slip} id={i} onRemove={handleDelete} onSubmit={handleSubmit} onChange={handleChange} onUpdate={updateSlip} toWin={toWin}/>
+              </div>
+            )
+          })
+        :
+        ''
+      }
+        {(slipList === undefined || slipList.length === 0 || slipList === []) ? '' :
+          <div className='slip-buttons'>
+            <Button
+              onClick={handleClear}
+              id={props.id}
+              type='button'
+              className='slip-button'
+            >
+              CANCEL
+            </Button>
+            <Button
+              onClick={handleSubmit}
+              className='slip-button'
+              id='submit-slip'
+            >
+              PLACE BET(S)
+            </Button>
+          </div>
+        }
+      {/* } */}
     </div>
   )
 };

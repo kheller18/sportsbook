@@ -3,14 +3,19 @@ import '../styles/Nav.css';
 import { SportsContext } from './ActiveSports';
 import Button from './Button';
 import ActiveGames from './ActiveGames';
-// import API from '../utils/API';
+import { GlobalContextProvider } from '../utils/GlobalContext';
+
+import API from '../utils/API';
 
 const Nav = (props) => {
-  const sports = useContext(SportsContext);
+  // const sports = useContext(SportsContext);
+  // const sports = useContext(GlobalContextProvider);
+  // console.log(props)
+  const [sports, setSports] = useState([]);
   const [sportsBtn, setSportsBtn] = useState('');
   const [click, setClick] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
-  console.log(props)
+  // console.log(props)
   console.log(sports);
 
   const handleClick = (e, sport) => {
@@ -22,34 +27,60 @@ const Nav = (props) => {
     setSportsBtn(sport);
     setClick(false)
     setIsLoading(false);
-    // <ActiveGames data={sport} />
+    // return (<ActiveGames data={sport} />)
+    props.passSportData(sport.key);
   }
 
   useEffect(() => {
     // console.log(sports);
     // setIsLoading(false);
-  }, [])
+    const fetchData = async () => {
+      await (API.getSports())
+        .then(res => {
+          console.log(res.data.data);
+          setSports(res.data.data);
+          // sports.map((sport) => ({
+          //   active: sport.active,
+          //   details: sport.details,
+          //   group: sport.group,
+          //   has_outrights: sport.has_outrights,
+          //   key: sport.key,
+          //   title: sport.title,
+          // }))
+
+          setIsLoading(false);
+        })
+        .catch(err => {
+            console.log(err);
+        });
+    }
+    fetchData();
+  }, []);
 
   return (
-    <div className='nav-container'>
-      <div className='nav-header'>Sports</div>
-        {props.data.loading ? '' : sports.map((sport, i) => {
-          return(
-            // <div key={sport}>
-              <Button
-                onClick={(e) => handleClick(e, sport)}
-                data={sport}
-                className='nav-button'
-                // id='away-moneyline'
-              >
-                {sport}
-              </Button>
-            
-          );
-          {/* <div> */}
-        })}
-      {click ? '' : <ActiveGames data={{sport: sportsBtn, loading: isLoading}} />}
-    </div>
+    // <GlobalContextProvider>
+      <div className='nav-container'>
+        <div className='nav-header'>Sports</div>
+        {isLoading ? '' :
+          sports.map((sport, i) => {
+            return (
+              <div key={sport.key}>
+                <Button
+                  onClick={(e) => handleClick(e, sport)}
+                  data={sport}
+                  className='nav-button'
+                  // id='away-moneyline'
+                >
+                  {sport.title}
+                </Button>
+              </div>
+            );
+          })
+        }
+      </div>
+      /* {click ? '' : <ActiveGames data={{sport: sportsBtn, loading: isLoading}} />} */
+
+    // </GlobalContextProvider>
   );
 };
 

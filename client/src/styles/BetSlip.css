@@ -11,6 +11,17 @@
   padding-top: 5px;
 }
 
+.slip-tabs {
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.slip-tab {
+  
+}
+
 .slip-body {
   background-color: white;
   padding: 10px;
@@ -25,11 +36,11 @@
 }
 
 .slip-exit {
-  /* display: flex;
-  flex-direction: row; */
+  display: flex;
+  flex-direction: row;
   /* text-align: right; */
   width: 25px;
-  /* justify-content: right; */
+  justify-content: right;
 }
 
 .slip-exit:hover {
