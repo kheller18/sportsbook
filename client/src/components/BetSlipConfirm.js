@@ -10,64 +10,75 @@ const BetSlipConfirm = (props) => {
   // props.toWin = toWin
   // props.toLose = toLose
 
-  const [toLose, setToLose] = useState(undefined);
-  const [toWin, setToWin] = useState();
-  const [allSlips, setAllSlips] = useState({
-    userId: null,
-    gameKey: props.data.data.key,
-    betType: props.data.slipData.type,
-    team: props.data.slipData.team,
-    odds: props.data.slipData.odds,
-    outcome: null,
-    payout: null,
-    toLose: props.data.slipData.toLose,
-    toWin: props.data.slipData.toWin,
-    line: null
-  })
+  // const [toLose, setToLose] = useState(undefined);
+  // const [toWin, setToWin] = useState();
+  const slips = props.data;
+  console.log(slips)
+  // const [allSlips, setAllSlips] = useState({
+  //   userId: null,
+  //   gameKey: props.data.data.key,
+  //   betType: props.data.slipData.type,
+  //   team: props.data.slipData.team,
+  //   odds: props.data.slipData.odds,
+  //   outcome: null,
+  //   payout: null,
+  //   toLose: props.data.slipData.toLose,
+  //   toWin: props.data.slipData.toWin,
+  //   line: null
+  // })
 
-  console.log(allSlips);
+  // console.log(allSlips);
+  useEffect(() => {
+      setTimeout(() => {
+        props.passSlipState('default');
+        props.passSlipData([])
+      }, 4000);
 
 
-  return(
-    <div className='slip-confirm-body' key={props.id} id={props.id}>
-      <div className='slip-confirm-away-team'>{props.data.data.awayTeam}</div>
-      <div className='slip-confirm-home-team'>vs. {props.data.data.homeTeam}</div>
-      {props.data.slipData.type === 'MONEYLINE' ?
-        <div className='slip-confirm-bet-info'><b>MONEYLINE:</b> {props.data.slipData.team} ({props.data.slipData.odds})</div> :
-      ''
-      }
-      {props.data.slipData.type === 'SPREAD' ?
-        <div className='slip-confirm-bet-info'><b>SPREAD:</b> {props.data.slipData.team} {props.data.slipData.line} ({props.data.slipData.odds})</div> :
-      ''
-      }
-      {props.data.slipData.type === 'TOTALS-UNDER' ?
-        <div className='slip-confirm-bet-info'><b>TOTAL:</b> {props.data.slipData.team} U/{props.data.slipData.line} ({props.data.slipData.odds})</div> :
-      ''
-      }
-      {props.data.slipData.type === 'TOTALS-OVER' ?
-        <div className='slip-confirm-bet-info'><b>TOTAL:</b> {props.data.slipData.team} O/{props.data.slipData.line} ({props.data.slipData.odds})</div> :
-      ''
-      }
-      <div className='slip-money'>
-        <div className='slip-risk-money'>
-          <label>RISK</label>
-          <br />
-          <br />
-          {/* <input type='text' className='slip-to-lose' value={props.toLose} placeholder={props.toLose} onChange={(event) => handleChange(event, props.data)} /> */}
-          {/* <input type='text' className='slip-to-lose' name='to-lose' id={props.id} value={props.toLose} placeholder={props.toLose} onChange={(event) => handleChange(event, props.data)} /> */}
-        </div>
-        <div className='slip-win-money'>
-          <label>TO WIN</label>
-          <br />
-          <br />
-          {/* <Input
-            className='slip-to-win'
-            type='text'
-            value={toWin}
-          /> */}
-          <div className='slip-to-win'>{props.data.slipData.toWin}</div>
-        </div>
-      </div>
+  }, []);
+
+
+  return (
+    //key={props.id} id={props.id}
+    <div>
+      {slips.map(slip => {
+        return (
+          <div className='slip-confirm-body'>
+            <div className='slip-confirm-away-team'>{slip.data.awayTeam}</div>
+            <div className='slip-confirm-home-team'>vs. {slip.data.homeTeam}</div>
+            {slip.slipData.type === 'MONEYLINE' ?
+              <div className='slip-confirm-bet-info'><b>MONEYLINE:</b> {slip.slipData.team} ({slip.slipData.odds})</div> :
+            ''
+            }
+            {slip.slipData.type === 'SPREAD' ?
+              <div className='slip-confirm-bet-info'><b>SPREAD:</b> {slip.slipData.team} {slip.slipData.line} ({slip.slipData.odds})</div> :
+            ''
+            }
+            {slip.slipData.type === 'TOTALS-UNDER' ?
+              <div className='slip-confirm-bet-info'><b>TOTAL:</b> {slip.slipData.team} U/{slip.slipData.line} ({slip.slipData.odds})</div> :
+            ''
+            }
+            {slip.slipData.type === 'TOTALS-OVER' ?
+              <div className='slip-confirm-bet-info'><b>TOTAL:</b> {slip.slipData.team} O/{slip.slipData.line} ({slip.slipData.odds})</div> :
+            ''
+            }
+            <div className='slip-money'>
+              <div className='slip-risk-money'>
+                <label>RISK</label>
+                <br />
+                <br />
+                <div className='slip-to-lose'>{slip.slipData.toLose}</div>
+              </div>
+              <div className='slip-win-money'>
+                <label>TO WIN</label>
+                <br />
+                <br />
+                <div className='slip-to-win'>{slip.slipData.toWin}</div>
+              </div>
+            </div>  
+          </div>
+        )      
+      })}
     </div>
   );
 };

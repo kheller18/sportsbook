@@ -63,18 +63,20 @@ const Nav = (props) => {
         <div className='nav-header'>Sports</div>
         {isLoading ? '' :
           sports.map((sport, i) => {
-            return (
-              <div key={sport.key}>
-                <Button
-                  onClick={(e) => handleClick(e, sport)}
-                  data={sport}
-                  className='nav-button'
-                  // id='away-moneyline'
-                >
-                  {sport.title}
-                </Button>
-              </div>
-            );
+            if (sport.key !== 'aussierules_afl' && sport.key !== 'cricket_test_match') {
+              return (
+                <div key={sport.key}>
+                  <Button
+                    onClick={(e) => handleClick(e, sport)}
+                    data={sport}
+                    className='nav-button'
+                    // id='away-moneyline'
+                  >
+                    {sport.title}
+                  </Button>
+                </div>
+              );
+            }
           })
         }
       </div>

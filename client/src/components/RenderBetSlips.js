@@ -45,8 +45,13 @@ const RenderBetSlips = (props) => {
   }
 
   const updatePage = () => {
-    setIsSubmitted(true)
-    setSlipList([])
+    // setIsSubmitted(true)
+    // // props.onSubmit(slipList);
+    // console.log()
+    // props.passSlipState('submitted')
+    // props.passSlipData(slipSend)
+    // setSlipList([])
+
     // setTimout((), 5000)
   }
 
@@ -132,7 +137,14 @@ const RenderBetSlips = (props) => {
             if (res.status === 200) {
               console.log('200')
               // setIsSubmitted(true);
-              updatePage();
+              // updatePage();
+              setIsSubmitted(true)
+              // props.onSubmit(slipList);
+              let tempSlipList = slipList;
+              setSlipList([])
+              console.log(slipList)
+              props.passSlipData(tempSlipList)
+              props.passSlipState('submitted')
               // return (
               //   <div>
               //     <BetSlipConfirm data={res.data} />
@@ -171,11 +183,11 @@ const RenderBetSlips = (props) => {
 
   return (
     <div className='slip'>
-      <div className='slip-title'>BET SLIP</div>
+      {/* <div className='slip-title'>BET SLIP</div>
       <div className='slip-tabs'>
         <div className='slip-tab'>CART</div>
         <div className='slip-tab'>PENDING</div>
-      </div>
+      </div> */}
       {/* {(isSubmitted !== true && slipList !== undefined && slipList.length !== 0) ? */}
       {(slipList !== undefined && slipList.length !== 0) ?
         // (slipList === undefined || slipList.length === 0) ? '' :

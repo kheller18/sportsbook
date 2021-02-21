@@ -1,9 +1,14 @@
 import React, {useContext, useState, useEffect} from 'react';
+import BetSlipConfirm from './BetSlipConfirm';
 import Button from './Button';
+import RenderBetSlips from './RenderBetSlips'
 // import API from '../utils/API';
 
 const BetSlipContainer = (props) => {
   console.log(props)
+  const [slipState, setSlipState] = useState('active')
+  const [slipData, setSlipData] = useState()
+  const [betStatus, setBetStatus] = useState()
   // const sports = useContext(SportsContext);
   // const [sportsBtn, setSportsBtn] = useState('');
   // const [click, setClick] = useState(true);
@@ -22,11 +27,21 @@ const BetSlipContainer = (props) => {
   //   setIsLoading(false);
   //   // <ActiveGames data={sport} />
   // }
-
+  console.log(slipState);
+  console.log(slipData);
   useEffect(() => {
     // console.log(sports);
     // setIsLoading(false);
-  }, [])
+    console.log(slipState)
+    console.log('update')
+    if (slipState === 'submitted') {
+      console.log('inside here')
+      // setSlipState('default')
+      // setTimeout(() => {
+      //   setSlipState('default');
+      // }, 4000);
+    }
+  }, [setSlipState]) //setSlipState
 
   return (
     <div className='slip-container'>
@@ -35,6 +50,16 @@ const BetSlipContainer = (props) => {
         <div className='slip-tab'>CART</div>
         <div className='slip-tab'>PENDING</div>
       </div>
+      {slipState === 'active' ?
+       <RenderBetSlips passSlipState={setSlipState} passSlipData={setSlipData} data={props.data} />
+      :
+      ''
+      }
+      {
+        slipState === 'submitted' ?
+          <BetSlipConfirm data={slipData} passSlipState={setSlipState} passSlipData={setSlipData} />
+        : ''
+      }
     </div>
   );
 };
