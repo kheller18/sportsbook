@@ -74,6 +74,7 @@ router.post('/signup', (req, res) => {
       // passport.authenticate('local')(req, res, function() {
       //   console.log('authenticated');
       // })
+      // console.log(user)
       res.json({success: true, message:'creation successful', user});
     }
   });

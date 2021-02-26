@@ -31,10 +31,11 @@ const SignUp = () => {
     })
       .then(response => {
         if (response.status === 200) {
+          console.log(response)
           localStorage.setItem(
             'user',
             JSON.stringify({
-              id: response.data._id,
+              id: response.data.user._id,
               firstName: firstName,
               lastName: lastName,
               email: email,

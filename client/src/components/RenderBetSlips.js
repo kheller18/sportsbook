@@ -6,17 +6,24 @@ import Button from './Button';
 import BetSlipConfirm from './BetSlipConfirm'
 
 const RenderBetSlips = (props) => {
-  const [toLose, setToLose] = useState(undefined);
+  const [toLose, setToLose] = useState(0);
   const [toWin, setToWin] = useState();
+  // const [totalToLose, setTotalToLose] = useState(0)
+  console.log(props)
+  console.log(props.data)
   let newSlips = props.data;
-  console.log()
+  let tempSlipList = [];
+  // console.log(newSlips)
   const slipSend = [];
+  let totalToWin = 0;
+  let totalToLose = 0.00;
+  // const [newSlips, setNewSlips] = useState(props.data)
   const [submitSlips, setSubmitSlips] = useState([]);
   const [slipList, setSlipList] = useState([]);
   const [submittedSlips, setSubmittedSlips] = useState([])
   const [isSubmitted, setIsSubmitted] = useState(false)
-  let send = true;
-
+  const [loading, IsLoading] = useState(true);
+  console.log(newSlips)
   const handleDelete = (e) => {
     console.log(e);
     console.log(e.target.id)
@@ -66,11 +73,18 @@ const RenderBetSlips = (props) => {
         console.log(tempCalc)
         let finalCalc = tempCalc - e.target.value;
         setToLose(e.target.value)
+        console.log(e.target.value)
         data.toLose = e.target.value;
         console.log((e.target.value - finalCalc).toFixed(2))
         setToWin((e.target.value - finalCalc).toFixed(2));
         data.toWin=(e.target.value - finalCalc).toFixed(2);
+        // let totalToLose = 0;
+        // slipList.map(slip => {
+        //   totalToLose = parseFloat(totalToLose + slip.slipData.toLose);
+        //   console.log(totalToLose)
+        // })
         console.log(data);
+
         // return data;
         let index = slipList.findIndex(x => console.log(x));
         if (slipList.length === 1) {
@@ -104,15 +118,13 @@ const RenderBetSlips = (props) => {
 
     // function to post slip data based on slip type
     const slipData = async () => {
+      let send = true;
 
-      slipList.map(slip => {
-        console.log(slip)
-        console.log(slip.slipData.toLose)
+      slipList.map(slip => {      
+
         if (slip.slipData.toLose === '' || slip.slipData.toLose < 5) {
-
           console.log('nope')
           send = false;
-
         } else {
           slipSend.push({
             userId: userData._id,
@@ -130,68 +142,62 @@ const RenderBetSlips = (props) => {
         }
       })
 
-      if (send === true) {
-        await API.submitBetSlip(slipSend)
-          .then((res) => {
-            console.log(res);
-            if (res.status === 200) {
-              console.log('200')
-              // setIsSubmitted(true);
-              // updatePage();
-              setIsSubmitted(true)
-              // props.onSubmit(slipList);
-              let tempSlipList = slipList;
-              setSlipList([])
-              console.log(slipList)
-              props.passSlipData(tempSlipList)
-              props.passSlipState('submitted')
-              // return (
-              //   <div>
-              //     <BetSlipConfirm data={res.data} />
-              //   </div>
-              // )
-            }
-          })
-          .catch(err => {
-            console.log(err);
-          });
+      if (send) {
+        return Promise.all(slipSend.map(slip => API.submitBetSlip(slip)))
       }
+    }
 
+    slipData()
+      .then(data => {
+        console.log(data)
+        setSubmittedSlips(slipList)
+        setTimeout(() => {
+          setSlipList([])
+          setSubmittedSlips([])
+        }, 4000);
 
-
-    };
-
-    slipData();
+      })
+      .catch(err => {
+        console.log(err)
+      })
   };
 
   useEffect(() => {
-    // setSlips(slips);
-    // const slips = props.data;
-    // const [slipList, setSlipList] = useState();
-    console.log('mounted')
-    console.log(newSlips)
-    if (newSlips === undefined || newSlips === {} || newSlips === null) {
-
+    if (newSlips === undefined || newSlips === {} || newSlips === null || newSlips===[] || newSlips.length === 0) {
+      console.log('inside the correct')
     } else {
       setSlipList(slipList => [...slipList, newSlips])
+      console.log(newSlips)
       console.log("added")
     }
-    console.log(slipList)
-    // setSlips(slips)
+  }, [props.data]);
 
-  }, [newSlips]);
-
+  console.log(slipList)
   return (
     <div className='slip'>
-      {/* <div className='slip-title'>BET SLIP</div>
-      <div className='slip-tabs'>
-        <div className='slip-tab'>CART</div>
-        <div className='slip-tab'>PENDING</div>
-      </div> */}
-      {/* {(isSubmitted !== true && slipList !== undefined && slipList.length !== 0) ? */}
-      {(slipList !== undefined && slipList.length !== 0) ?
+      {submittedSlips.length}
+      {slipList.length === 0 && submittedSlips.length === 0 ? 
+        <div className='empty-slip-container'>
+          <span><i id='empty-slip-image' className='fa fa-shopping-cart' aria-hidden="true"></i></span>
+        </div>
+      :
+      ''}
+
+      {submittedSlips.length > 0 ? 
+        <BetSlipConfirm data={submittedSlips} />
+      :
+      ''
+      }
+
+      {(slipList !== undefined && slipList.length !== 0 && submittedSlips.length === 0) ?
         // (slipList === undefined || slipList.length === 0) ? '' :
           slipList.map((slip, i) => {
+            // if (slip.slipData.toLose <= 0) {
+            //   totalToLose = parseFloat(totalToLose)
+            // } else {
+            //   totalToLose += parseFloat(totalToLose + slip.slipData.toLose).toFixed(2);
+            // }
+            totalToLose = parseFloat(totalToLose + slip.slipData.toLose).toFixed(2);
             return (
               <div key={slip.data.key}>
                 <BetSlip data={slip} id={i} onRemove={handleDelete} onSubmit={handleSubmit} onChange={handleChange} onUpdate={updateSlip} toWin={toWin}/>
@@ -201,30 +207,35 @@ const RenderBetSlips = (props) => {
         :
         ''
       }
-        {(slipList === undefined || slipList.length === 0 || slipList === []) ? '' :
-          <div className='slip-buttons'>
-            <Button
-              onClick={handleClear}
-              id={props.id}
-              type='button'
-              className='slip-button'
-            >
-              CANCEL
-            </Button>
-            <Button
-              onClick={handleSubmit}
-              className='slip-button'
-              id='submit-slip'
-            >
-              PLACE BET(S)
-            </Button>
+
+      {/* {(slipList === undefined || slipList.length === 0 || slipList === []) ? '' :
+          <div className='slip-total-money'>
+            {totalToLose}
           </div>
-        }
-      {/* } */}
+      } */}
+
+      {(slipList === undefined || slipList.length === 0 || slipList === []) || submittedSlips.length > 0 ? '' :
+        <div className='slip-buttons'>
+          <Button
+            onClick={handleClear}
+            id={props.id}
+            type='button'
+            className='slip-button'
+          >
+            CANCEL
+          </Button>
+          <Button
+            onClick={handleSubmit}
+            className='slip-button'
+            id='submit-slip'
+          >
+            PLACE BET(S)
+          </Button>
+        </div>
+      }
     </div>
   )
 };
 
-export default RenderBetSlips;
-
 // take the value from the slip, set it to the array here, then re render the whole page using useffect dependency
+export default RenderBetSlips;

@@ -1,0 +1,32 @@
+.slip-container {
+  width: 300px;
+  /* border: 1px solid; */
+  /* border-radius: 15px; */
+}
+
+.slip-tabs {
+  height: 30px;
+  display: flex;
+  flex-direction: row;
+  /* justify-content: space-evenly; */
+  /* background-color: green; */
+}
+
+.slip-tab {
+  width: 150px;
+}
+
+.empty-slip-container {
+  height: 150px;
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+#empty-slip-image {
+  height: 50px;
+  width: 50px;
+  /* color: black; */
+}

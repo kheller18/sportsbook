@@ -11,11 +11,15 @@ const Login = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
+    console.log(event)
+    console.log(email)
+    console.log(password)
     // login function
     API.login(email, password)
       .then((response) => {
+        console.log(response)
         if (response.data.success === true) {
+          console.log(response)
           setIsLoggedIn(true);
         } else {
           // setIsError(true);

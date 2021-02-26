@@ -5,8 +5,10 @@ body {
 .App {
   text-align: center;
   background-color: darkgray;
-  /* height: 100%; */
+  height: 100%;
+  /* display: flex; */
   /* min-height: 950px; */
+  overflow: scroll;
 }
 
 .App-logo {

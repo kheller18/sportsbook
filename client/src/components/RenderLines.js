@@ -23,22 +23,22 @@ const RenderLines = (props) => {
     // sets click data for bet slips
     switch (e.target.id) {
       case 'away-moneyline':
-        props.passClickData({ data: game, slipData: {team: game.awayTeam, line: null, odds: game.awayMoneyLine, type: 'MONEYLINE', toWin: null, toLose: '', outcome: null, status: 'LIVE', payout: null}, isLoading: false });
+        props.passClickData({ data: game, slipData: {team: game.awayTeam, line: null, odds: game.awayMoneyLine, type: 'MONEYLINE', toWin: null, toLose: 0, outcome: null, status: 'LIVE', payout: null}, isLoading: false });
         break;
       case 'away-spread':
-        props.passClickData({ data: game, slipData: {team: game.awayTeam, line: game.awaySpread, odds: game.awaySpreadOdds, type: 'SPREAD', toWin: null, toLose: '', outcome: null, status: 'LIVE', payout: null},  isLoading: false });
+        props.passClickData({ data: game, slipData: {team: game.awayTeam, line: game.awaySpread, odds: game.awaySpreadOdds, type: 'SPREAD', toWin: null, toLose: 0, outcome: null, status: 'LIVE', payout: null},  isLoading: false });
         break;
       case 'over':
-        props.passClickData({ data: game, slipData: {team: game.awayTeam, line: game.overUnder, odds: game.overOdds, type: 'TOTALS-OVER', toWin: null, toLose: '', outcome: null, status: 'LIVE', payout: null},  isLoading: false });
+        props.passClickData({ data: game, slipData: {team: game.awayTeam, line: game.overUnder, odds: game.overOdds, type: 'TOTALS-OVER', toWin: null, toLose: 0, outcome: null, status: 'LIVE', payout: null},  isLoading: false });
         break;
       case 'home-moneyline':
-        props.passClickData({ data: game, slipData: {team: game.homeTeam, line: null, odds: game.homeMoneyLine, type: 'MONEYLINE', toWin: null, toLose: '', outcome: null, status: 'LIVE', payout: null},  isLoading: false });
+        props.passClickData({ data: game, slipData: {team: game.homeTeam, line: null, odds: game.homeMoneyLine, type: 'MONEYLINE', toWin: null, toLose: 0, outcome: null, status: 'LIVE', payout: null},  isLoading: false });
         break;
       case 'home-spread':
-        props.passClickData({ data: game, slipData: {team: game.homeTeam, line: game.homeSpread, odds: game.homeSpreadOdds, type: 'SPREAD', toWin: null, toLose: '', outcome: null, status: 'LIVE', payout: null},  isLoading: false });
+        props.passClickData({ data: game, slipData: {team: game.homeTeam, line: game.homeSpread, odds: game.homeSpreadOdds, type: 'SPREAD', toWin: null, toLose: 0, outcome: null, status: 'LIVE', payout: null},  isLoading: false });
         break;
       case 'under':
-        props.passClickData({ data: game, slipData: {team: game.homeTeam, line: game.overUnder, odds: game.underOdds, type: 'TOTALS-UNDER', toWin: null, toLose: '', outcome: null, status: 'LIVE', payout: null},  isLoading: false });
+        props.passClickData({ data: game, slipData: {team: game.homeTeam, line: game.overUnder, odds: game.underOdds, type: 'TOTALS-UNDER', toWin: null, toLose: 0, outcome: null, status: 'LIVE', payout: null},  isLoading: false });
         break;
       default:
         console.log('None selected.')

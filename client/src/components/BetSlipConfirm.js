@@ -29,10 +29,10 @@ const BetSlipConfirm = (props) => {
 
   // console.log(allSlips);
   useEffect(() => {
-      setTimeout(() => {
-        props.passSlipState('default');
-        props.passSlipData([])
-      }, 4000);
+      // setTimeout(() => {
+        // props.passSlipData([])
+        // props.passSlipState('cart');
+      // }, 4000);
 
 
   }, []);

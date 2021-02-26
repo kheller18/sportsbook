@@ -6,7 +6,7 @@ function UserDashboard() {
   const [bets, setBets] = useState([]);
   // const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState('');
-
+// BREAK down bet type and percentage
   useEffect(() => {
     // function to get user data for indiviaulized dashboard
     const userData = async () => {
@@ -27,7 +27,7 @@ function UserDashboard() {
   return (
     <div className='dashboard-container'>
       <div className='dashboard-body'>
-        <div className='dashboard-title'>Welcome {user}!</div>
+        <div className='dashboard-title'>Welcome, {user}!</div>
       </div>
     </div>
   );

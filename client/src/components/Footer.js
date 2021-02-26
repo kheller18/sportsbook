@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/Footer.css';
 
-function Footer() {
+const Footer = () => {
   return (
     <div className='footer'>
       <h6 className='footer-title'>Copyright SportsBook 2020</h6>

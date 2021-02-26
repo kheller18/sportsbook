@@ -15,8 +15,9 @@ const Nav = (props) => {
   const [sportsBtn, setSportsBtn] = useState('');
   const [click, setClick] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
+  console.log('inside nav')
   // console.log(props)
-  console.log(sports);
+  // console.log(sports);
 
   const handleClick = (e, sport) => {
     e.preventDefault();
@@ -62,22 +63,25 @@ const Nav = (props) => {
       <div className='nav-container'>
         <div className='nav-header'>Sports</div>
         {isLoading ? '' :
-          sports.map((sport, i) => {
-            if (sport.key !== 'aussierules_afl' && sport.key !== 'cricket_test_match') {
-              return (
-                <div key={sport.key}>
-                  <Button
-                    onClick={(e) => handleClick(e, sport)}
-                    data={sport}
-                    className='nav-button'
-                    // id='away-moneyline'
-                  >
-                    {sport.title}
-                  </Button>
-                </div>
-              );
-            }
-          })
+          <div className='nav-sports-container'>
+            {sports.map((sport, i) => {
+              if (sport.key !== 'aussierules_afl' && sport.key !== 'cricket_test_match') {
+                return (
+                  <div key={sport.key}>
+                    <Button
+                      onClick={(e) => handleClick(e, sport)}
+                      data={sport}
+                      className='nav-button'
+                      // id='away-moneyline'
+                    >
+                      {sport.title}
+                    </Button>
+                  </div>
+                );
+              }
+            })}
+          </div>
+          
         }
       </div>
       /* {click ? '' : <ActiveGames data={{sport: sportsBtn, loading: isLoading}} />} */

@@ -1,7 +1,7 @@
 .slip-title {
   background-color: darkblue;
   color: white;
-  height: 50px;
+  height: 40px;
   display: flex;
   flex-direction: row;
   /* justify-content: center; */
@@ -9,17 +9,6 @@
   font-size: 20px;
   padding-left: 10px;
   padding-top: 5px;
-}
-
-.slip-tabs {
-  height: 50px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-.slip-tab {
-  
 }
 
 .slip-body {

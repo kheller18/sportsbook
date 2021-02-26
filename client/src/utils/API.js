@@ -22,16 +22,9 @@ export default {
 
   // submits a bet
   submitBetSlip: (betInfo) => {
-    console.log(betInfo);
-    if (betInfo.length === 1) {
-      return axios.post('/api/bet', {
-        betInfo
-      });  
-    } else {
-      return axios.post('/api/bet/bulk', {
-        betInfo
-      });
-    }
+    return axios.post('/api/bet', {
+      betInfo
+    }); 
   },
 
   // gets bets per user
@@ -40,6 +33,12 @@ export default {
       userId
     });
   },
+
+  // getUserBets: (userId) => {
+  //   return axios.get('/api/bet', {
+  //     userId
+  //   });
+  // },
 
   // post for a new user
   signup: (userData) => {
@@ -54,7 +53,8 @@ export default {
     })
       .then((response) => {
         if (response.data.token) {
-          localStorage.setItem('user', JSON.stringify(response.data.user));
+          console.log(response.data)
+          localStorage.setItem('user', JSON.stringify(response.data.user)); // define what is passed back
         }
         return response;
       })
